@@ -1,5 +1,5 @@
 {
     "deploy": {
-        "goal": "bootRun"
+        "goal": "-Dgrails.env=prod bootRun"
     }
 }
