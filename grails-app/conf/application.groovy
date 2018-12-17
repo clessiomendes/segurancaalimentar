@@ -45,13 +45,15 @@ environments {
     }
     production {
         dataSource {
-            System.out.println("System.getProperties().getProperty('POSTGRESQL_ADDON_URI') "+System.getProperties().getProperty('POSTGRESQL_ADDON_URI'));
-            System.out.println("System.getProperty('POSTGRESQL_ADDON_URI') "+System.getProperty("POSTGRESQL_ADDON_URI"));
-            System.out.println("System.getProperty('POSTGRESQL_ADDON_HOST') "+System.getProperty("POSTGRESQL_ADDON_HOST"));
             System.out.println("System.properties['POSTGRESQL_ADDON_URI'] "+System.properties["POSTGRESQL_ADDON_URI"]);
             System.out.println("System.getProperty('URL_DB') "+System.getProperty("URL_DB"));
+//            System.out.println("System.getProperties().getProperty('POSTGRESQL_ADDON_URI') "+System.getProperties().getProperty('POSTGRESQL_ADDON_URI'));
+//            System.out.println("System.getProperty('POSTGRESQL_ADDON_URI') "+System.getProperty("POSTGRESQL_ADDON_URI"));
+//            System.out.println("System.getProperty('POSTGRESQL_ADDON_HOST') "+System.getProperty("POSTGRESQL_ADDON_HOST"));
 //            url = "${System.getProperties().getProperty("POSTGRESQL_ADDON_URI")}"
-            url = "jdbc:postgresql://u6d92kuqbd4sktvhdqyc:r1WLBnKI08Arev8Af3QD@birhqh6cukaewdch9nze-postgresql.services.clever-cloud.com:5432/birhqh6cukaewdch9nze"
+            url = "jdbc:postgresql://birhqh6cukaewdch9nze-postgresql.services.clever-cloud.com:5432/birhqh6cukaewdch9nze"
+            username = "u6d92kuqbd4sktvhdqyc"
+            password = "r1WLBnKI08Arev8Af3QD"
         }
     }
 }
