@@ -33,9 +33,19 @@ dataSource {
     initialSize = 1
     minIdle = 1
     maxIdle = 1
+}
 
-    url = "jdbc:postgresql://localhost:5432/sa"
-    username = "postgres"
-    password = "senha"
-
+environments {
+    development {
+        dataSource {
+            url = "jdbc:postgresql://localhost:5432/sa"
+            username = "postgres"
+            password = "senha"
+        }
+    }
+    production {
+        dataSource {
+            url = "${System.getProperties().getProperty("POSTGRESQL_ADDON_URI")}"
+        }
+    }
 }
