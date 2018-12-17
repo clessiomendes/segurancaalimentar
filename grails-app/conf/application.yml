@@ -98,6 +98,9 @@ dataSource:
 #    password: ''
 
 environments:
+    production:
+        dataSource:
+            url: '${POSTGRESQL_ADDON_URI}'
 #    development:
 #        dataSource:
 #            dbCreate: create-drop
