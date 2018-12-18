@@ -40,6 +40,7 @@ class SegurancaHelper {
 
     public static void logout(HttpSession session) {
         session.credencial = null;
+//        session.invalidate();
     }
 
     public static boolean logado(HttpSession session) {

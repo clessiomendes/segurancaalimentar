@@ -50,7 +50,7 @@ class GestaoController {
         //verifica se ja esta presente no cache da sessao
         if (! session.regionais)
             //se ainda nao estiver no cache, insere
-            session.regionais = ServicoSistema.findAll().collect{it.regional}.unique().sort();
+            session.regionais = ServicoSistema.findAll().collect{ it.regional }.unique().findAll{ it }.sort();
         return session.regionais;
     }
 
