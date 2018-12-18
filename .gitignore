@@ -132,4 +132,6 @@ gradle-app.setting
 
 #Outros
 out/
+data/segalim.backup
+*.backup
 

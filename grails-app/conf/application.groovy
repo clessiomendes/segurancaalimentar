@@ -6,10 +6,10 @@ grails.views.gsp.encoding = "UTF-8"
 grails.converters.encoding = "UTF-8"
 
 String aHost = System.getenv('POSTGRESQL_ADDON_HOST') ?: "localhost";
-String aPort = System.getenv('POSTGRESQL_ADDON_HOST') ?: "5432";
-String aDb = System.getenv('POSTGRESQL_ADDON_HOST') ?: "sa";
-String aUsername = System.getenv('POSTGRESQL_ADDON_HOST') ?: "postgres";
-String aPassword = System.getenv('POSTGRESQL_ADDON_HOST') ?: "senha";
+String aPort = System.getenv('POSTGRESQL_ADDON_PORT') ?: "5432";
+String aDb = System.getenv('POSTGRESQL_ADDON_DB') ?: "sa";
+String aUsername = System.getenv('POSTGRESQL_ADDON_USER') ?: "postgres";
+String aPassword = System.getenv('POSTGRESQL_ADDON_PASSWORD') ?: "senha";
 
 //Configuracoes gerais para todos os ambientes (sobrescrever configuracoes de ambientes especificos na sequencia)
 dataSource {
@@ -49,9 +49,9 @@ environments {
     validacao {
         dataSource {
 //            dbCreate = "update"
-//            url = "jdbc:postgresql://${}:${System.getenv('POSTGRESQL_ADDON_PORT')}/${System.getenv('POSTGRESQL_ADDON_DB')}"
-//            username = System.getenv('POSTGRESQL_ADDON_USER')
-//            password = System.getenv('POSTGRESQL_ADDON_PASSWORD')
+//            url = "jdbc:postgresql://${}:${System.getenv('')}/${System.getenv('')}"
+//            username = System.getenv('')
+//            password = System.getenv('')
         }
     }
     production {
