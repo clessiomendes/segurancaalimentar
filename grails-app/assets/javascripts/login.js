@@ -29,7 +29,8 @@
         console.log('usuario ' + gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getName() + ' logado.');
         var redirectUrl = '/inicio/enter';
         //using jquery to post data dynamically
-        var form = $('<form action="' + redirectUrl + '" method="post">' +
+        var form = $('<form action="' + redirectUrl + '" method="post"> ' +
+                      '<input type="hidden" name="acesso" value="'+$('#selectPerfil').val()+'" /> ' +
                       '<input type="text" name="id_token" value="' +
                        gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token + '" /> </form>');
         $('body').append(form);

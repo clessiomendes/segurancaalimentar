@@ -82,7 +82,33 @@ class GestaoController {
         render view: 'index'
     }
 
+    /**
+     * Retorna uma descricao textual dos filtros escolhidos (Para ser usado nos titulos dos graficos)
+     */
+    private String completaTituloGrafico(String nomeRegional, Integer idServico, Integer ano, Integer mes) {
+        String result = "";
+        if (mes) {
+            if (ano)
+                result += ", " + mapaMeses().find{ it.key == mes }.value + "/" + ano
+        } else if (ano) {
+            result += ", "+ano
+        }
+
+        if (idServico) {
+            //busca do cache para evitar consultas excessivas ao banco de dados
+            ServicoSistema ss = getServicosComCache(null).find { it.id == idServico};
+            if (ss)
+                result += ", "+ss.nome
+        } else if (nomeRegional) {
+            result += ", "+nomeRegional
+        }
+        return result;
+    }
+
     def obtemConcessoesMensal(String nomeRegional, Integer idServico, Integer ano) {
+
+        String tituloGrafico = 'Cestas Concedidas'+completaTituloGrafico(nomeRegional, idServico, ano, null)
+
         Map<Date, Integer> concessoes = estatisticaService.getEstatisticaConcessoesMensal(nomeRegional, idServico, ano);
 
         List labels = concessoes.keySet().collect { it.format('MMM') }.toList();
@@ -121,7 +147,8 @@ class GestaoController {
                 options: [
                         title: [
                                 display: true,
-                                text: 'Cestas Concedidas, mês a mês'
+                                text: tituloGrafico,
+                                fontSize: 15,
                         ],
                         scales: [
                             xAxes: [[
@@ -161,6 +188,9 @@ class GestaoController {
     }
 
     def obtemHistorico(String nomeRegional, Integer idServico, Integer ano) {
+
+        String tituloGrafico = 'Histórico do Programa'+completaTituloGrafico(nomeRegional, idServico, ano, null)
+
         //Inicializacao das situacoes (SituacaoPrograma) previstos na resposta
         Map<SituacaoPrograma, String> mapaAcoes = [
                 (SituacaoPrograma.INSERIDA): 'Inserções',
@@ -211,7 +241,8 @@ class GestaoController {
                             legend: [ display: true, ],
                         title: [
                             display: true,
-                            text: 'Histórico do Programa'
+                            text: tituloGrafico,
+                            fontSize: 15,
                         ],
                         scales: [
                             yAxes: [[
@@ -246,6 +277,9 @@ class GestaoController {
     }
 
     def obtemFamiliasAtendidas(String nomeRegional, Integer ano, Integer mes) {
+
+        String tituloGrafico = 'Famílias Atendidas'+completaTituloGrafico(nomeRegional, null, ano, mes);
+
         Map<String, Integer> concessoes = estatisticaService.getEstatisticaFamiliasAtendidas(nomeRegional, ano, mes);
 
         List labels = concessoes.keySet().toList();
@@ -266,8 +300,8 @@ class GestaoController {
                 options: [
                     title: [
                             display: true,
-                            text: 'Famílias atendidas',
-                            fontSize: 20,
+                            text: tituloGrafico,
+                            fontSize: 15,
                     ],
                     plugins: [
                         datalabels: [
@@ -292,6 +326,9 @@ class GestaoController {
     }
 
     def obtemFamiliasAtual(String nomeRegional, Long idServico) {
+
+        String tituloGrafico = 'Familias hoje'+completaTituloGrafico(nomeRegional, idServico, null, null)
+
         //Inicializacao das situacoes (SituacaoPrograma) previstos na resposta
         Map<SituacaoPrograma, String> mapaSituacoes = [
                 (SituacaoPrograma.INSERIDA): 'Inseridas no Programa',
@@ -332,8 +369,8 @@ class GestaoController {
                 options: [
                     title: [
                             display: true,
-                            text: 'Familias Hoje',
-                            fontSize: 20,
+                            text: tituloGrafico,
+                            fontSize: 15,
                     ],
                     plugins: [
                         datalabels: [

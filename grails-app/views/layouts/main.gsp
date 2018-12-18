@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="org.apoiasuas.util.SegurancaHelper" %>
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="pt-br" class="no-js">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -9,7 +9,7 @@
     <title>
         <g:layoutTitle default="Provisão Alimentar"/>
     </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
     <asset:script src="login.js"/>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

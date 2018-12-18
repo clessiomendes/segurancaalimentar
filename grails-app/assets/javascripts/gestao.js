@@ -171,6 +171,10 @@ function atualiza(btn, url) {
                   try {
                       chart.options.plugins.centertext = result.options.plugins.centertext;
                   } catch (e) { }
+                  //atualiza o titulo (ignora se nao houver esse elemento no grafico)
+                  try {
+                      chart.options.title.text = result.options.title.text;
+                  } catch (e) { }
                   chart.update();
               })
         .fail(function(erro) {

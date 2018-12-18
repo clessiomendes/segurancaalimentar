@@ -43,15 +43,15 @@ environments {
             password = "senha"
         }
     }
-    production {
+    validacao {
         dataSource {
-            maxActive = 1
+            maxActive = 2
             initialSize = 1
             minIdle = 1
-            maxIdle = 1
+            maxIdle = 2
 
-            System.out.println("System.properties['POSTGRESQL_ADDON_URI'] "+System.properties["POSTGRESQL_ADDON_URI"]);
-            System.out.println("System.getProperty('URL_DB') "+System.getProperty("URL_DB"));
+            System.out.println("Lendo configuracoes em ambiente de validacao (application.groovy)");
+            System.out.println("System.properties['POSTGRESQL_ADDON_HOST'] "+System.getenv("POSTGRESQL_ADDON_HOST"));
 //            System.out.println("System.getProperties().getProperty('POSTGRESQL_ADDON_URI') "+System.getProperties().getProperty('POSTGRESQL_ADDON_URI'));
 //            System.out.println("System.getProperty('POSTGRESQL_ADDON_URI') "+System.getProperty("POSTGRESQL_ADDON_URI"));
 //            System.out.println("System.getProperty('POSTGRESQL_ADDON_HOST') "+System.getProperty("POSTGRESQL_ADDON_HOST"));

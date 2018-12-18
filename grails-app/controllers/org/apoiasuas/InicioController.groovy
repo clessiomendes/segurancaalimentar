@@ -1,6 +1,8 @@
 package org.apoiasuas
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken
+import grails.util.Environment
+import org.apoiasuas.redeSocioAssistencial.Acesso
 import org.apoiasuas.redeSocioAssistencial.ServicoSistema
 import org.apoiasuas.redeSocioAssistencial.ServicoSistemaService
 import org.apoiasuas.redeSocioAssistencial.UsuarioSistema
@@ -24,8 +26,10 @@ class InicioController {
 
     def enter() {
         String idToken = params["id_token"];
+        String acesso = params["acesso"];
         if (! idToken)
             return render(view:'index');
+
         GoogleIdToken.Payload payLoad = SegurancaHelper.getPayload(idToken);
         if (payLoad) {
             if (payLoad.getHostedDomain() != 'pbh.gov.br') {
@@ -39,6 +43,14 @@ class InicioController {
                 request.mensagemErro = "Operador ${payLoad.getEmail()} não autorizado."
                 return render(view: 'index');
             }
+
+            ss.discard();
+            us.discard();
+
+            //Em ambientes diferentes de producao, é possível se escolher o perfil do operador e sobrescreve-lo
+            //sobre o perfil previsto para o servico
+            if (Environment.current != Environment.PRODUCTION && acesso)
+                ss.acesso = Acesso.valueOf(acesso);
             SegurancaHelper.login(session, ss, us);
         }
         forward controller: 'familia'

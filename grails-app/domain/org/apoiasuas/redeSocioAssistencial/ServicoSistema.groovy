@@ -19,5 +19,15 @@ class ServicoSistema {
 }
 
 public enum Acesso {
-    ENCAMINHAMENTO, ATENDIMENTO, GESTAO
+    ENCAMINHAMENTO('Serviço do SUAS'), ATENDIMENTO('Banco de Alimentos'), GESTAO('Gestão')
+
+    private String descricao
+
+    public getName() {
+        return name();
+    }
+
+    public Acesso(String descricao) {
+        this.descricao = descricao
+    }
 }
