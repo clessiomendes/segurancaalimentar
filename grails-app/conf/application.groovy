@@ -23,13 +23,13 @@ dataSource {
 
     minEvictableIdleTimeMillis = 1800000
     timeBetweenEvictionRunsMillis = 1800000
-    numTestsPerEvictionRun = 3
+    numTestsPerEvictionRun = 1
     testOnBorrow = true
     testOnConnect = true
     testWhileIdle = true
     testOnReturn = true
     validationQuery = "SELECT 1*1"
-    maxActive = 3
+    maxActive = 1
     initialSize = 1
     minIdle = 1
     maxIdle = 1
@@ -45,6 +45,11 @@ environments {
     }
     production {
         dataSource {
+            maxActive = 1
+            initialSize = 1
+            minIdle = 1
+            maxIdle = 1
+
             System.out.println("System.properties['POSTGRESQL_ADDON_URI'] "+System.properties["POSTGRESQL_ADDON_URI"]);
             System.out.println("System.getProperty('URL_DB') "+System.getProperty("URL_DB"));
 //            System.out.println("System.getProperties().getProperty('POSTGRESQL_ADDON_URI') "+System.getProperties().getProperty('POSTGRESQL_ADDON_URI'));
