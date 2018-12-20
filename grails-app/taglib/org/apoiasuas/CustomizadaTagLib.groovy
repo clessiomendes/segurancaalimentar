@@ -3,6 +3,7 @@ package org.apoiasuas
 import org.apoiasuas.cidadao.Familia
 import org.apoiasuas.cidadao.SituacaoPrograma
 import org.apoiasuas.redeSocioAssistencial.Acesso
+import org.apoiasuas.util.Credencial
 import org.apoiasuas.util.StringUtils
 
 class CustomizadaTagLib {
@@ -198,6 +199,7 @@ class CustomizadaTagLib {
 
         out << render(template: '/layouts/campoExibicao', model: attrs) { newBody }
     }
+
     /**
      * @attr familia REQUIRED
      */
@@ -212,35 +214,61 @@ class CustomizadaTagLib {
             //acoes para os servicos da ponta:
             if (acesso == Acesso.ENCAMINHAMENTO && session.credencial.servicoSistema.id == familia.servicoSistemaSeguranca.id) {
                 if (familia.situacao in [SituacaoPrograma.PRE_SELECIONADA, SituacaoPrograma.INSERCAO_LIBERADA, SituacaoPrograma.NAO_ATENDIDA, SituacaoPrograma.NAO_LOCALIZADA])
-                    out << '\n ' + g.actionSubmit(value: "Inserir no programa", action:'inserir', class: 'botao-acao');
+                    out << '\n ' + g.actionSubmit(value: "Inserir no programa", action:'inserir', class: 'botao-acao btn-default btn');
                 if (familia.situacao != SituacaoPrograma.NAO_ATENDIDA)
-                    out << '\n ' + g.actionSubmit(value: "Não será atendida atualmente", action:'naoAtender', class: 'botao-acao');
+                    out << '\n ' + g.actionSubmit(value: "Não será atendida atualmente", action:'naoAtender', class: 'botao-acao btn-default btn');
                 if (familia.situacao != SituacaoPrograma.NAO_LOCALIZADA)
-                    out << '\n ' + g.actionSubmit(value: "Não foi localizada", action:'naoLocalizada', class: 'botao-acao');
+                    out << '\n ' + g.actionSubmit(value: "Não foi localizada", action:'naoLocalizada', class: 'botao-acao btn-default btn');
                 if (familia.situacao == SituacaoPrograma.INDICADA_SERVICO)
-                    out << '\n ' + g.actionSubmit(value: "Excluir", action:'excluir', class: 'botao-acao');
+                    out << '\n ' + g.actionSubmit(value: "Excluir", action:'excluir', class: 'botao-acao btn-default btn');
             }
 
             //acoes para a gestao:
             if (acesso == Acesso.GESTAO) {
                 if (familia.situacao == SituacaoPrograma.INDICADA_SERVICO) {
-                    out << '\n ' + g.actionSubmit(value: "Liberar inserção no programa", action: 'liberarInsercao', class: 'botao-acao');
-                    out << '\n ' + g.actionSubmit(value: "Não será atendida atualmente", action:'naoAtender', class: 'botao-acao');
+                    out << '\n ' + g.actionSubmit(value: "Liberar inserção no programa", action: 'liberarInsercao', class: 'botao-acao btn-default btn');
+                    out << '\n ' + g.actionSubmit(value: "Não será atendida atualmente", action:'naoAtender', class: 'botao-acao btn-default btn');
                 }
                 if (familia.situacao in [SituacaoPrograma.INSERCAO_LIBERADA, SituacaoPrograma.INSERIDA])
-                    out << '\n ' + g.actionSubmit(value: "Registrar concessão", action:'registrarConcessao', class: 'botao-acao');
+                    out << '\n ' + g.actionSubmit(value: "Registrar concessão", action:'registrarConcessao', class: 'botao-acao btn-default btn');
             }
 
             //acoes para o banco de alimentos:
             if (acesso == Acesso.ATENDIMENTO) {
                 if (familia.situacao == SituacaoPrograma.INSERIDA)
-                    out << '\n ' + g.actionSubmit(value: "Registrar concessão", action:'registrarConcessao', class: 'botao-acao');
+                    out << '\n ' + g.actionSubmit(value: "Registrar concessão", action:'registrarConcessao', class: 'botao-acao btn-default btn');
             }
             out << '\n ';
         }
 //        if (acesso == Acesso.ENCAMINHAMENTO && familia.situacao != SituacaoPrograma.INSERIDA)
 //            out << form
 
+    }
+
+    /**
+     * @attr not
+     * @attr acessos REQUIRED
+     */
+    def temAcesso = { attrs, body ->
+        boolean not = false;
+        if (attrs.containsKey('not'))
+            not = attrs.not == true;
+        List<Acesso> acessos = []
+        if (attrs.containsKey('acessos')) {
+            if (attrs.acessos instanceof Acesso)
+                acessos = [attrs.acessos]
+            else
+                acessos = attrs.acessos
+        }
+        if (not)
+            acessos = Acesso.values().removeAll(acessos);
+        Credencial credencial = session.credencial;
+        if (! credencial?.acesso)
+            return;
+
+        if (acessos.contains(credencial.acesso)) {
+            out << body();
+        }
     }
 
 /*

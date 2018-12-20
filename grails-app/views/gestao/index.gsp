@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@ page import="org.apoiasuas.GestaoController; java.text.DateFormatSymbols; org.apoiasuas.redeSocioAssistencial.ServicoSistema; org.apoiasuas.util.SegurancaHelper; org.apoiasuas.cidadao.Cidadao; org.apoiasuas.cidadao.Familia" %>
+<%@ page import="org.apoiasuas.redeSocioAssistencial.Acesso; org.apoiasuas.GestaoController; java.text.DateFormatSymbols; org.apoiasuas.redeSocioAssistencial.ServicoSistema; org.apoiasuas.util.SegurancaHelper; org.apoiasuas.cidadao.Cidadao; org.apoiasuas.cidadao.Familia" %>
 <html>
     <head>
         <meta name="layout" content="main" />
@@ -28,10 +28,10 @@
 <div class="painel-graficos">
     <div class="row">
 <!--                         FAMILIAS  HOJE                                                -->
-        <tmpl:chart idGrafico="idFamiliasAtual" filtros='${[nomeRegional: "${nomeRegional}", idServico: "${idServico}"]}'
+        <tmpl:chart acessos="${[Acesso.ENCAMINHAMENTO, Acesso.GESTAO]}" idGrafico="idFamiliasAtual" filtros='${[nomeRegional: "${nomeRegional}", idServico: "${idServico}"]}'
                     action="${g.createLink(action:'obtemFamiliasAtual')}" json="${raw(jsonFamiliasAtual)}" />
 <!--                         FAMILIAS ATENDIDAS POR REGIONAL OU POR SERVICO                                         -->
-        <tmpl:chart idGrafico="idFamiliasAtendidas" filtros="${[nomeRegional: "${nomeRegional}", ano: "${ano}", mes: "${mes}"]}"
+        <tmpl:chart acessos="${[Acesso.ENCAMINHAMENTO, Acesso.GESTAO]}" idGrafico="idFamiliasAtendidas" filtros="${[nomeRegional: "${nomeRegional}", ano: "${ano}", mes: "${mes}"]}"
                     action="${g.createLink(action:'obtemFamiliasAtendidas')}" json="${raw(jsonConcessoesAnual)}" />
     </div>
     <div class="row">
@@ -39,7 +39,7 @@
         <tmpl:chart idGrafico="idConcessoesMensal" filtros="${[nomeRegional: "${nomeRegional}", idServico: "${idServico}", ano: "${ano}"]}"
                     action="${g.createLink(action:'obtemConcessoesMensal')}" json="${raw(jsonConcessoesMensal)}" />
         <!--                          ACOES EMPREENDIDAS MES A MES                  -->
-        <tmpl:chart idGrafico="idHistorico" filtros="${[nomeRegional: "${nomeRegional}", idServico: "${idServico}", ano: "${ano}"]}"
+        <tmpl:chart acessos="${[Acesso.ENCAMINHAMENTO, Acesso.GESTAO]}" idGrafico="idHistorico" filtros="${[nomeRegional: "${nomeRegional}", idServico: "${idServico}", ano: "${ano}"]}"
                     action="${g.createLink(action:'obtemHistorico')}" json="${raw(jsonHistorico)}" />
     </div>
 

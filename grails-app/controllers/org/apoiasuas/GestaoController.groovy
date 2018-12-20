@@ -298,8 +298,8 @@ class GestaoController {
         Map dataset = [
                 data: concessoes.values().toList(),
                 //cores: tantas quanto os labels
-                backgroundColor: cores.values().take(labels.size()).collect {"rgba($it, 0.5)"} ,
-                borderColor: cores.values().take(labels.size()).collect {"rgba($it, 0.5)"} ,
+                backgroundColor: cores.values().collect {"rgba($it, 0.5)"} ,
+                borderColor: cores.values().collect {"rgba($it, 0.5)"} ,
         ]
         
         Map chartDefinition = [
@@ -366,8 +366,8 @@ class GestaoController {
         Map dataset = [
                 data: familias.values().toList(), //.collect { it + new Random().nextInt(18) },
                 //cores: tantas quanto os labels
-                backgroundColor: cores.values().take(labels.size()).collect {"rgba($it, 0.5)"} ,
-                borderColor: cores.values().take(labels.size()).collect {"rgba($it, 0.5)"} ,
+                backgroundColor: cores.values().collect {"rgba($it, 0.5)"} ,
+                borderColor: cores.values().collect {"rgba($it, 0.5)"} ,
         ]
 
         //definicao completa do grafico (Chart) no padrao do ChartJs

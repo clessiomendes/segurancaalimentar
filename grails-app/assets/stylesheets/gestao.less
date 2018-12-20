@@ -1,17 +1,23 @@
 .row {
     padding: 0;
+    max-width: inherit;
 }
 
 .painel-graficos {
     background-color: #424649;
     overflow: auto;
 }
+
 .div-chart {
+    @raio-borda: 20px;
     //width: 50%;
     //float: left;
+    -webkit-border-radius: @raio-borda;
+    -moz-border-radius: @raio-borda;
+    border-radius: @raio-borda;
     background-color: white;
     border: 7px solid #424649;
-    padding: 2px;
+    padding: @raio-borda/2;
     min-width: 530px;
     //overflow: hidden;
     //padding: 10px;

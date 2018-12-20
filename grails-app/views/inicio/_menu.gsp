@@ -1,13 +1,13 @@
-<%@ page import="org.apoiasuas.util.SegurancaHelper; org.apoiasuas.util.Credencial" %>
+<%@ page import="org.apoiasuas.redeSocioAssistencial.Acesso; org.apoiasuas.util.SegurancaHelper; org.apoiasuas.util.Credencial" %>
 <% Credencial credencial = SegurancaHelper.getCredencial(session) %>
 
 <div class="header-main">Provisão Alimentar para Famílias do SUAS BH</div>
 <div class="topnav" id="myTopnav">
     %{--<a href="#home" class="active">Home</a>--}%
     <g:link controller="inicio">Início</g:link>
-    <g:if test="${credencial.encaminhamento}">
+    <g:temAcesso acessos="${Acesso.ENCAMINHAMENTO}">
         <g:link controller="familia" action="create">Indicar Nova Família</g:link>
-    </g:if>
+    </g:temAcesso>
     <g:link controller="gestao">Gestão</g:link>
 
     <g:if test="${SegurancaHelper.logado(session)}">
