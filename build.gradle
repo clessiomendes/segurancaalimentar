@@ -27,7 +27,6 @@ repositories {
 }
 
 dependencies {
-    assets "com.bertramlabs.plugins:less-asset-pipeline:2.14.6"
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
     compile "org.grails:grails-core"
@@ -52,7 +51,7 @@ dependencies {
     runtime "org.glassfish.web:el-impl:2.1.2-b03"
     runtime "org.apache.tomcat:tomcat-jdbc"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.14.6"
-    runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.14.8"
+    assets "com.bertramlabs.plugins:less-asset-pipeline:2.14.6"
     testCompile "org.grails:grails-gorm-testing-support"
     testCompile "org.grails:grails-web-testing-support"
 

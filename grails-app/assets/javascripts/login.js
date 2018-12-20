@@ -39,6 +39,7 @@
   }
 
   function handleSignOutClick(event) {
+      event.preventDefault();
       console.log('handleSignOutClick')
       gapi.auth2.getAuthInstance().signOut().then(function() {
         var redirectUrl = '/inicio/logout';
@@ -48,4 +49,5 @@
           console.log('redirecionando para '+redirectUrl)
         form.submit();
       });
+      return false;
   }

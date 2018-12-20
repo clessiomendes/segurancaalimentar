@@ -7,13 +7,22 @@
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
+        <div class="header-main">Provisão Alimentar para Famílias do SUAS BH</div>
         <h1 style="text-align: center">
-            <g:if test = "${grails.util.Environment.current != grails.util.Environment.PRODUCTION}">
-                Ambiente de testes. Escolha um perfil de uso:<br>
-                <g:select name="selectPerfil" optionKey="name" optionValue="descricao" from="${Acesso.values()}"/><br><br>
-            </g:if>
-            Entre com o email e senha do seu serviço<br>
-            <button title="Clique para entrar com o email e senha do seu serviço" id="signin-button" onclick="handleSignInClick()">Gmail</button>
+                <g:if test="${request.mensagemErro}">
+                    <ul class="errors" role="alert">
+                        <li>${request.mensagemErro}</li>
+                    </ul>
+                </g:if>
+                <g:if test = "${grails.util.Environment.current != grails.util.Environment.PRODUCTION}">
+                    Ambiente de testes. Escolha um perfil de uso:<br><br>
+                    <g:select name="selectPerfil" class="form-control" optionKey="name" optionValue="descricao"
+                              style="width:15em; display: inline-block" from="${Acesso.values()}"/><br><br>
+                </g:if>
+                Entre com o email e senha do seu serviço<br><br>
+                <button title="Clique para entrar com o email e senha do seu serviço"
+                        class="btn btn-default" onclick="handleSignInClick()">Gmail</button>
+                <br><br>
         </h1>
     </body>
 </html>

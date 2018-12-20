@@ -7,14 +7,8 @@
         <asset:stylesheet src="familia.css"/>
     </head>
     <body>
-        <a href="#show-familia" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-%{--
-        <div class="nav" role="navigation">
-            <ul>
-                <li><g:link class="list" action="index">Voltar</g:link></li>
-            </ul>
-        </div>
---}%
+        <g:render template="/inicio/menu"/>
+
         <div id="show-familia" class="content scaffold-show" role="main">
             <h1>Familia de ${this.familia.nomeReferencia}</h1>
             <g:if test="${flash.message}">

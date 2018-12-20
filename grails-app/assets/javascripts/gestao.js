@@ -48,26 +48,6 @@ Chart.pluginService.register({
     }
 });
 
-function inicializaComponenteChart(chartDefinition, afterFit) {
-    var currentScript = document.currentScript || (function () {
-                var scripts = document.getElementsByTagName('script');
-                return scripts[scripts.length - 1];
-            })();
-    var $divCanvas = $('<div><canvas/></div>');
-    var $canvas = $divCanvas.find('canvas');
-    //$divCanvas.prependTo($(currentScript).parent());
-    $divCanvas.appendTo($(currentScript).parent());
-
-/*
-    var $btnDownload = $(currentScript).parent().find(".download-button");
-    $btnDownload.click(function() {
-        donwloadGrafico($canvas[0]);
-    })
-*/
-
-    return new Chart($canvas, chartDefinition);
-}
-
 function donwloadGrafico(btn) {
     var elementos = getElementos(btn);
     var titulo = elementos.chart.options.title.text || 'grafico'
@@ -151,6 +131,14 @@ function atualiza(btn, url) {
                   mes: elementos.selectMes ? elementos.selectMes.value : "",
               },
               function( result ) {
+/*
+                  if (! chart) {
+                      inicializaComponenteChart(result);
+                      chart.update();
+                      return;
+                  }
+*/
+
                   //atualiza os labels
                   chart.data.labels = result.data.labels;
 

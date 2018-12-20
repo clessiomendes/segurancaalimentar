@@ -1,0 +1,56 @@
+.row {
+    padding: 0;
+}
+
+.painel-graficos {
+    background-color: #424649;
+    overflow: auto;
+}
+.div-chart {
+    //width: 50%;
+    //float: left;
+    background-color: white;
+    border: 7px solid #424649;
+    padding: 2px;
+    min-width: 530px;
+    //overflow: hidden;
+    //padding: 10px;
+
+    /*exibe apenas um grafico por linha*/
+    /*
+    @media only screen and (max-width: 1000px) {
+        min-width: 500px;
+        width: 100%;
+    }
+    */
+    .btn-group {
+        float: right;
+        .btn {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            font-size: 18px;
+        }
+    }
+
+    select {
+        display: inline-block;
+        padding: 0;
+        width: 5em;
+        &.select-regional {
+            width: 9em;
+        } &.select-servico {
+            width: 11em;
+        }
+    }
+}
+
+
+.refresh-button:before {
+    content: '\f0b0'; //<i class="fas fa-filter"></i>
+}
+.clean-button:before {
+    content: '\f2ea'; //<i class="fas fa-filter"></i>
+}
+.download-button:before {
+    content: '\f0ab'; //<i class="fas fa-filter"></i>
+}

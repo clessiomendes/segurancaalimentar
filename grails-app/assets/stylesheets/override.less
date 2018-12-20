@@ -1,0 +1,31 @@
+/*Sobrescrevendo as propriedades de bootstrap.css e grails.css*/
+
+.container-fluid, .container {
+    display:flex;
+    align-items:center;
+}
+
+.container-fluid, .container  > .navbar-header {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+@media (min-width: 768px) {
+    .navbar-nav > li {
+        /*padding-top: 15px;*/
+        /*padding-bottom: 15px;*/
+        min-height: 5em;
+        display:flex;
+        align-items:center;
+    }
+    .navbar-nav > li > a {
+        padding-top: 0;
+        padding-bottom: 0;
+        /*min-height: 5em;*/
+    }
+}
+
+.form-control {
+    padding: 6px 2px;
+}
+

@@ -88,8 +88,8 @@ img {
     color: #ffffff;
     clear: both;
     font-size: 0.8em;
-    margin-top: 1.5em;
-    padding: 1em;
+    /*margin-top: 1.5em;*/
+    padding:  2em 1em 1em 1em;
     min-height: 1em;
 }
 
@@ -573,7 +573,19 @@ img.grails-logo {
     margin-top:-10px;
 }
 
+/* layout de filtros */
+@espacamento-filtros: 10px;
+.form-filtro {
+    padding-left: @espacamento-filtros;
+    padding-bottom: @espacamento-filtros;
+    .input-group, .form-group {
+        margin-top: @espacamento-filtros;
+        margin-right: @espacamento-filtros;
+    }
+}
+
 .campoFiltragem {
-    margin: 15px 0 15px 15px;
+    margin: @espacamento-filtros 0 @espacamento-filtros @espacamento-filtros;
     display: inline-block;
 }
+

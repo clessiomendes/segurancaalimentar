@@ -4276,15 +4276,15 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-brand {
   float: left;
-  width: 80px;
-  height: 80px;
+  /*width: 80px;*/
+  /*height: 80px;*/
   font-size: 18px;
   line-height: 20px;
 }
 
 .navbar-brand img {
-  width: 80px;
-  height: 80px;
+  /*width: 80px;*/
+  /*height: 80px;*/
 
 }
 .navbar-brand:hover,
@@ -4369,8 +4369,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     float: left;
   }
   .navbar-nav > li > a {
-    padding-top: 25px;
-    padding-bottom: 25px;
+    padding-top: 15px;
+    padding-bottom: 15px;
   }
 }
 .navbar-form {

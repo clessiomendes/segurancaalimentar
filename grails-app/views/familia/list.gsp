@@ -5,58 +5,53 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'familia.label', default: 'Familia')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
-        <asset:script src="familia.js"/>
-        <asset:stylesheet src="familia.css"/>
+        <asset:javascript src="familia"/>
+        <asset:stylesheet src="familia"/>
     </head>
     <body>
 
-    %{-- cinzas
-        escuro #333333
-        claro  #666666
-    --}%
+        <g:render template="/inicio/menu"/>
 
-            <a href="#list-familia" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+        <a href="#list-familia" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 
-            <g:render template="/inicio/menu"/>
+        <div id="list-familia" class="content scaffold-list" role="main">
 
-            <div id="list-familia" class="content scaffold-list" role="main">
+            <g:render template="filtros"/>
 
-                <g:render template="filtros"/>
+            <g:if test="${flash.message}">
+                <div class="message" role="status">${flash.message}</div>
+            </g:if>
 
-                <g:if test="${flash.message}">
-                    <div class="message" role="status">${flash.message}</div>
-                </g:if>
+            <table class="tabela-familias">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th class="hide-on-mobile">Endereço</th>
+                    <th>Situação</th>
+                    <th class="hide-on-mobile" >NIS</th>
+                    <th>Indicadores</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <g:each in="${cidadaoList}" status="i" var="cidadaoInstance">
+                        <% org.apoiasuas.cidadao.Cidadao cidadao = cidadaoInstance %>
+                        <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+                            <td class="coluna-referencia"><g:link action="show" id="${cidadao.familia.id}">${cidadao.nome}</g:link></td>
+                            <td class="coluna-endereco hide-on-mobile" >${cidadao.familia.getEnderecoBasico()}</td>
+                            <td>${cidadao.familia.situacao}</td>
+                            <td class="hide-on-mobile" >${cidadao.NIS}</td>
+                            <td class="coluna-vulnerabilidades">
+                                <g:vulnerabilidades familia="${cidadao.familia}"/>
+                            </td>
+                        </tr>
+                    </g:each>
+                </tbody>
+            </table>
 
-                <table class="tabela-familias">
-                    <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th class="hide-on-mobile">Endereço</th>
-                        <th>Situação</th>
-                        <th class="hide-on-mobile" >NIS</th>
-                        <th>Indicadores</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <g:each in="${cidadaoList}" status="i" var="cidadaoInstance">
-                            <% org.apoiasuas.cidadao.Cidadao cidadao = cidadaoInstance %>
-                            <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                                <td class="coluna-referencia"><g:link action="show" id="${cidadao.familia.id}">${cidadao.nome}</g:link></td>
-                                <td class="coluna-endereco hide-on-mobile" >${cidadao.familia.getEnderecoBasico()}</td>
-                                <td>${cidadao.familia.situacao}</td>
-                                <td class="hide-on-mobile" >${cidadao.NIS}</td>
-                                <td class="coluna-vulnerabilidades">
-                                    <g:vulnerabilidades familia="${cidadao.familia}"/>
-                                </td>
-                            </tr>
-                        </g:each>
-                    </tbody>
-                </table>
-
-                <div class="pagination">
-                    <g:paginate total="${cidadaoCount ?: 0}" />
-                </div>
+            <div class="pagination">
+                <g:paginate total="${cidadaoCount ?: 0}" />
             </div>
+        </div>
 
     </body>
 </html>

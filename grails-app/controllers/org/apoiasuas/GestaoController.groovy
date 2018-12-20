@@ -7,6 +7,8 @@ import org.apoiasuas.cidadao.ResultadoEstatistica
 import org.apoiasuas.cidadao.SituacaoPrograma
 import org.apoiasuas.redeSocioAssistencial.Acesso
 import org.apoiasuas.redeSocioAssistencial.ServicoSistema
+import org.apoiasuas.util.Credencial
+import org.apoiasuas.util.SegurancaHelper
 
 class GestaoController {
 
@@ -33,6 +35,30 @@ class GestaoController {
             Magenta: '240, 50, 230',
             Pink: '250, 190, 190',
     ];
+
+    def index() {
+        //Alimenta os caches de regionais e servicos, que serao utilizados na renderizacao da pagina
+        getRegionaisComCache();
+        getServicosComCache();
+
+        //filtros padrao de acordo com o servico logado e o perfil do usuario
+        Credencial credencial = SegurancaHelper.getCredencial(session);
+        if (credencial.acesso == Acesso.ENCAMINHAMENTO) {
+            request.idServico = credencial.servicoSistema.id;
+            request.nomeRegional = credencial.servicoSistema.regional;
+        }
+        request.ano = 2017 //fixme: buscar o ultimo ano de uma das tabelas de estatistica (guardar em cache de sessao)
+
+        //chama as actions de todos os graficos, converte para string e armazena no request para serem renderizadas
+        //na tela quando esta é exibidia pela primeira vez. Nas atualizacoes subsequentes de cada grafico individual,
+        //a action correspondente é chamada via ajax e, nesse momento, a resposta é passada no formato JSON
+        request.jsonFamiliasAtual = obtemFamiliasAtual(request.nomeRegional, request.idServico);
+        request.jsonConcessoesAnual = obtemFamiliasAtendidas(request.nomeRegional, request.ano, request.mes);
+        request.jsonConcessoesMensal = obtemConcessoesMensal(request.nomeRegional, request.idServico, request.ano);
+        request.jsonHistorico = obtemHistorico(request.nomeRegional, request.idServico, request.ano);
+
+        render view: 'index'
+    }
 
     /**
      * API que retorna os servicos aa partir de uma regional (ou todos os servicos, se o parametro for vazio).
@@ -67,25 +93,10 @@ class GestaoController {
             return session.servicos;
     }
 
-    def index() {
-        //Alimenta os caches de regionais e servicos, que serao utilizados na renderizacao da pagina
-        getRegionaisComCache();
-        getServicosComCache();
-
-        //chama as actions de todos os graficos, convert para string e armazena no request para serem renderizadas
-        //na tela quando esta é exibidia pela primeira vez. Nas atualizacoes subsequentes de cada grafico individual,
-        //a action correspondente é chamada via ajax e, nesse momento, a resposta é passada no formato JSON
-        request.jsonFamiliasAtual = obtemFamiliasAtual(null, null);
-        request.jsonConcessoesAnual = JsonOutput.prettyPrint((obtemFamiliasAtendidas()).toString());;
-        request.jsonConcessoesMensal = JsonOutput.prettyPrint((obtemConcessoesMensal()).toString());
-        request.jsonHistorico = JsonOutput.prettyPrint((obtemHistorico()).toString());
-        render view: 'index'
-    }
-
     /**
      * Retorna uma descricao textual dos filtros escolhidos (Para ser usado nos titulos dos graficos)
      */
-    private String completaTituloGrafico(String nomeRegional, Integer idServico, Integer ano, Integer mes) {
+    private String completaTituloGrafico(String nomeRegional, Long idServico, Integer ano, Integer mes) {
         String result = "";
         if (mes) {
             if (ano)
@@ -105,7 +116,7 @@ class GestaoController {
         return result;
     }
 
-    def obtemConcessoesMensal(String nomeRegional, Integer idServico, Integer ano) {
+    def obtemConcessoesMensal(String nomeRegional, Long idServico, Integer ano) {
 
         String tituloGrafico = 'Cestas Concedidas'+completaTituloGrafico(nomeRegional, idServico, ano, null)
 
@@ -135,11 +146,11 @@ class GestaoController {
                 label: "limite",
         ]
 
-        //mostra limites apenas quando nenhuma regional tiver sido selecionada
-        List datasets = nomeRegional ? [datasetConcedidas] : [datasetConcedidas, datasetLimites];
+        //mostra limites apenas quando nenhuma regional ou servico tiverem sido selecionados
+        List datasets = (nomeRegional || idServico) ? [datasetConcedidas] : [datasetConcedidas, datasetLimites];
 
         Map chartDefinition = [
-                type: 'line',
+                type: 'bar',
                 data: [
                         labels: labels,
                         datasets: datasets,
@@ -187,7 +198,7 @@ class GestaoController {
         }
     }
 
-    def obtemHistorico(String nomeRegional, Integer idServico, Integer ano) {
+    def obtemHistorico(String nomeRegional, Long idServico, Integer ano) {
 
         String tituloGrafico = 'Histórico do Programa'+completaTituloGrafico(nomeRegional, idServico, ano, null)
 

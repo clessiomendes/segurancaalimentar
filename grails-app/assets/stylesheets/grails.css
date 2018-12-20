@@ -47,7 +47,7 @@ pre {
     background-color: #424649;
     border: 0px;
 }
-a.navbar-brand {
+.navbar-brand {
     color: white !important;
     font-size: 19px !important;
 }

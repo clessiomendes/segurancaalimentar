@@ -8,7 +8,7 @@ import org.hibernate.Session
 @Transactional(readOnly = true)
 class EstatisticaService {
 
-    public Map<Date, Integer> getEstatisticaConcessoesMensal(String nomeRegional, Integer idServico, Integer ano) {
+    public Map<Date, Integer> getEstatisticaConcessoesMensal(String nomeRegional, Long idServico, Integer ano) {
         String sqlSelect = "select a.mes, sum(a.quantidade) ";
         String sqlFrom = " FROM estatistica_concessoes a join servico b on a.servico_id = b.id ";
         String sqlWhere = ' where 1=1 ';
@@ -151,7 +151,7 @@ class EstatisticaService {
     }
 
     public ResultadoEstatistica getEstatisticaHistoricoFamilias(List<SituacaoPrograma> acoes,
-                                                                String nomeRegional, Integer idServico, Integer ano) {
+                                                                String nomeRegional, Long idServico, Integer ano) {
         String sqlSelect = "select a.mes, a.acao, sum(a.quantidade) ";
         String sqlFrom = " FROM estatistica_historico_familia a join servico b on a.servico_id = b.id ";
         String sqlWhere = ' where 1 = 1 ';
