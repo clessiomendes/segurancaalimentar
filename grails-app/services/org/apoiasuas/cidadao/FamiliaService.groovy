@@ -29,6 +29,20 @@ abstract class FamiliaService {
     @Transactional
     public abstract Familia save(Familia familia)
 
+/*
+    public Map imprimirFormulario(Familia familia, Credencial credencial) {
+        Map result = [:]
+
+// 1) Load doc file and set Velocity template engine and cache it to the registry
+        InputStream template = new ByteArrayInputStream(formulario.modelos.find {it.id == idModelo}.arquivo );
+        result.report = XDocReportRegistry.getRegistry().loadReport(template, TemplateEngineKind.Velocity);
+
+// 2) Create Java model context
+        result.context = result.report.createContext();
+        result.fieldsMetadata = result.report.createFieldsMetadata();
+    }
+*/
+
     @Transactional
     public void grava(Familia familia, Credencial credencial) {
         boolean nova = (familia.id == null);

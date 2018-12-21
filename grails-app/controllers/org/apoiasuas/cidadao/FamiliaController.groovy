@@ -46,6 +46,7 @@ class FamiliaController {
 
     def inserir(Familia familia) {
         familia.situacao = SituacaoPrograma.INSERIDA;
+//        familiaService.imprimirFormulario(familia, SegurancaHelper.getCredencial(session));
         familiaService.grava(familia, SegurancaHelper.getCredencial(session));
         flash.message = "Família inserida no programa. RF: "+familia.nomeReferencia
         forward(action: 'index');
@@ -55,6 +56,13 @@ class FamiliaController {
         familia.situacao = SituacaoPrograma.NAO_ATENDIDA;
         familiaService.grava(familia, SegurancaHelper.getCredencial(session));
         flash.message = "Família marcada como não atendida. RF: "+familia.nomeReferencia
+        forward(action: 'index');
+    }
+
+    def naoLocalizada(Familia familia) {
+        familia.situacao = SituacaoPrograma.NAO_LOCALIZADA;
+        familiaService.grava(familia, SegurancaHelper.getCredencial(session));
+        flash.message = "Família marcada como não localizada. RF: "+familia.nomeReferencia
         forward(action: 'index');
     }
 

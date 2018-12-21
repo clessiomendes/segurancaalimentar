@@ -60,6 +60,21 @@ dependencies {
     compile 'com.google.api-client:google-api-client:1.25.0'
     compile 'com.google.http-client:google-http-client-jackson:1.25.0'
 
+/*
+    //XDocReport (geracao de relatorio a partir de templates docx ou odt)
+    runtime "fr.opensagres.xdocreport:fr.opensagres.xdocreport.core:1.0.4"
+    runtime "fr.opensagres.xdocreport:fr.opensagres.xdocreport.document:1.0.4"
+    runtime "fr.opensagres.xdocreport:fr.opensagres.xdocreport.template:1.0.4"
+//        compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter:1.0.4"
+    runtime "fr.opensagres.xdocreport:fr.opensagres.xdocreport.document.docx:1.0.4" //suporte a .docx
+    runtime "fr.opensagres.xdocreport:fr.opensagres.xdocreport.document.odt:1.0.4" //suporte a .odt
+    runtime "fr.opensagres.xdocreport:fr.opensagres.xdocreport.template.velocity:1.0.4" //suporte a velocity
+//        compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.docx.xwpf:1.0.4" //conversao PDF e XHTML
+//        compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.docx.docx4j:1.0.4" //conversao PDF e XHTML
+//        compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.fop.docx:1.0.4" //conversao PDF e XHTML
+//        compile "fr.opensagres.xdocreport:org.apache.poi.xwpf.converter.pdf:1.0.4" //conversao PDF e XHTML
+*/
+
 //    compile 'org.grails.plugins:spring-security-core:3.2.3'
 //    compile 'org.grails.plugins:spring-security-oauth2:1.1.0'
 //    compile 'org.grails.plugins:spring-security-oauth2-google:1.1.0'
