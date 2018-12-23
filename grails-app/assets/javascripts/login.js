@@ -38,6 +38,7 @@
       });
   }
 
+/*
   function handleSignOutClick(event) {
       event.preventDefault();
       console.log('handleSignOutClick')
@@ -51,3 +52,4 @@
       });
       return false;
   }
+*/

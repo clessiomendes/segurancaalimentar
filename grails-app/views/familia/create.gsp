@@ -4,36 +4,23 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'familia.label', default: 'Familia')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <asset:javascript src="familia"/>
+        <asset:stylesheet src="familia"/>
     </head>
     <body>
         <g:render template="/inicio/menu"/>
 
-    %{--
-            <div class="nav" role="navigation">
-                <ul>
-                    <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                    <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-                </ul>
-            </div>
-    --}%
         <div id="create-familia" class="content scaffold-create" role="main">
             <h1>Sugerir Nova Família para o Programa</h1>
-            <g:if test="${flash.message}">
-                <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <g:hasErrors bean="${this.familia}">
-            <ul class="errors" role="alert">
-                <g:eachError bean="${this.familia}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:eachError>
-            </ul>
-            </g:hasErrors>
-            <g:form resource="${this.familia}" method="POST">
+
+            <g:form action="save">
+            %{--<g:form resource="${this.familia}" method="POST">--}%
                 <fieldset class="form">
                     <g:render template="/familia/form"/>
                 </fieldset>
                 <fieldset class="buttons">
-                    <g:submitButton name="create" class="save" value="Confirmar" />
+                    <button class="btn btn-default"><i class="fas fa-save"></i> Gravar</button>
+                    <g:link controller="familia" action="list" class="btn btn-default"><i class="fas fa-undo-alt"></i> Cancelar</g:link>
                 </fieldset>
             </g:form>
         </div>

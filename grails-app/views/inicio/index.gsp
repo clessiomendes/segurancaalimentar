@@ -26,5 +26,22 @@
                 </button>
                 <br><br>
         </h1>
+
+        %{--Javascript para carregar a API de login do google--}%
+    
+        <g:if env="production">
+            <script defer src="https://apis.google.com/js/api.js"
+                    onload="this.onload=function(){};handleClientLoad()"
+                    onerror="alert('Erro contactando Gmail. Atualize a pagina para tentar novamente');"
+                    onreadystatechange="if (this.readyState === 'complete') this.onload()">
+            </script>
+        </g:if>
+        <g:else>
+            <script defer src="https://apis.google.com/js/api.js"
+                    onload="this.onload=function(){};handleClientLoad()"
+                    onreadystatechange="if (this.readyState === 'complete') this.onload()">
+            </script>
+        </g:else>
+
     </body>
 </html>

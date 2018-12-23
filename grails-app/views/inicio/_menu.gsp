@@ -10,9 +10,8 @@
     </g:temAcesso>
     <g:link controller="gestao">Gestão</g:link>
 
-    <g:if test="${SegurancaHelper.logado(session)}">
-        <g:link class="opcao-menu-direita" onclick="handleSignOutClick(event)">Sair</g:link>
-    </g:if>
+    %{--<g:link class="opcao-menu-direita" onclick="handleSignOutClick(event)">Sair</g:link>--}%
+    <g:link class="opcao-menu-direita" controller="inicio" action="logout">Sair</g:link>
     <a href="javascript:void(0);" class="icon" onclick="menuCelular()">
         <i class="fa fa-bars"></i>
     </a>

@@ -7,6 +7,7 @@ import org.apoiasuas.cidadao.ResultadoEstatistica
 import org.apoiasuas.cidadao.SituacaoPrograma
 import org.apoiasuas.redeSocioAssistencial.Acesso
 import org.apoiasuas.redeSocioAssistencial.ServicoSistema
+import org.apoiasuas.util.Cache
 import org.apoiasuas.util.Credencial
 import org.apoiasuas.util.SegurancaHelper
 
@@ -38,8 +39,8 @@ class GestaoController {
 
     def index() {
         //Alimenta os caches de regionais e servicos, que serao utilizados na renderizacao da pagina
-        getRegionaisComCache();
-        getServicosComCache();
+//        getRegionaisComCache();
+//        getServicosComCache();
 
         //filtros padrao de acordo com o servico logado e o perfil do usuario
         Credencial credencial = SegurancaHelper.getCredencial(session);
@@ -62,35 +63,14 @@ class GestaoController {
 
     /**
      * API que retorna os servicos aa partir de uma regional (ou todos os servicos, se o parametro for vazio).
-     * Usa cache de sessao para evitar acessos ao banco de dados
+     * Usa cache para evitar acessos ao banco de dados
      * @param regional
      * @return JSON com uma lista de pares [id: nome] dos servicos
      */
     def selectRegional(String regional) {
-        Map result = getServicosComCache(regional)
-                .collectEntries { [(it.id.toString()): it.nome] }
+//        Map result = getServicosComCache(regional).collectEntries { [(it.id.toString()): it.nome] }
+        Map result = Cache.getServicosEncaminhamento(regional).collectEntries { [(it.id.toString()): it.nome] }
         render result as JSON;
-    }
-
-    public List<String> getRegionaisComCache() {
-        //verifica se ja esta presente no cache da sessao
-        if (! session.regionais)
-            //se ainda nao estiver no cache, insere
-            session.regionais = ServicoSistema.findAll().collect{ it.regional }.unique().findAll{ it }.sort();
-        return session.regionais;
-    }
-
-    public List<ServicoSistema> getServicosComCache(String regional) {
-        //verifica se ja esta presente no cache da sessao
-        if (! session.servicos)
-            //se ainda nao estiver no cache, insere
-            session.servicos = ServicoSistema.findAllByAcesso(Acesso.ENCAMINHAMENTO).sort{ it.nome };
-
-        //filtra a lista do cache
-        if (regional)
-            return ((List<ServicoSistema>)session.servicos).findAll { it.regional == regional }
-        else
-            return session.servicos;
     }
 
     /**
@@ -107,7 +87,7 @@ class GestaoController {
 
         if (idServico) {
             //busca do cache para evitar consultas excessivas ao banco de dados
-            ServicoSistema ss = getServicosComCache(null).find { it.id == idServico};
+            ServicoSistema ss = Cache.getServico(idServico);
             if (ss)
                 result += ", "+ss.nome
         } else if (nomeRegional) {
@@ -309,22 +289,23 @@ class GestaoController {
                         datasets: [dataset],
                 ],
                 options: [
-                    title: [
-                            display: true,
-                            text: tituloGrafico,
-                            fontSize: 15,
-                    ],
-                    plugins: [
-                        datalabels: [
-                            font: [
-                                size: 10,
-                            ]
+                        aspectRatio: 1.5,
+                        title: [
+                                display: true,
+                                text: tituloGrafico,
+                                fontSize: 15,
                         ],
-                        centertext: [
-                                text: concessoes.values().sum() ?: "0",
-                                sidePadding: 50 //Default 20 (as a percentage)
-                        ],
-                    ]
+                        plugins: [
+                            datalabels: [
+                                font: [
+                                    size: 10,
+                                ]
+                            ],
+                            centertext: [
+                                    text: concessoes.values().sum() ?: "0",
+                                    sidePadding: 50 //Default 20 (as a percentage)
+                            ],
+                        ]
                 ]
         ]
         //depende de quem chamou:
@@ -343,7 +324,8 @@ class GestaoController {
         //Inicializacao das situacoes (SituacaoPrograma) previstos na resposta
         Map<SituacaoPrograma, String> mapaSituacoes = [
                 (SituacaoPrograma.INSERIDA): 'Inseridas no Programa',
-                (SituacaoPrograma.NAO_ATENDIDA): 'Indeferidas',
+                (SituacaoPrograma.NAO_ATENDIDA): 'Indeferidas pelo Serviço',
+                (SituacaoPrograma.INSERCAO_RECUSADA_GESTAO): 'Indeferidas pela Gestão',
                 (SituacaoPrograma.NAO_LOCALIZADA): 'Não Localizadas',
                 (SituacaoPrograma.PRE_SELECIONADA): 'Não Analizadas',
                 (SituacaoPrograma.REMOVIDA): 'Desligadas'
@@ -378,24 +360,25 @@ class GestaoController {
                         datasets: [dataset],
                 ],
                 options: [
-                    title: [
-                            display: true,
-                            text: tituloGrafico,
-                            fontSize: 15,
-                    ],
-                    plugins: [
-                        datalabels: [
-                            font: [
-                                size: 10,
+                        aspectRatio: 1.5,
+                        title: [
+                                display: true,
+                                text: tituloGrafico,
+                                fontSize: 15,
+                        ],
+                        plugins: [
+                            datalabels: [
+                                font: [
+                                    size: 10,
+                                ]
+                            ],
+                            centertext: [
+                                    text: familias.values().sum() ?: "0",
+    //                            color: '#36A2EB', //Default black
+    //                            fontStyle: 'Helvetica', //Default Arial
+                                    sidePadding: 50 //Default 20 (as a percentage)
                             ]
                         ],
-                        centertext: [
-                                text: familias.values().sum() ?: "0",
-//                            color: '#36A2EB', //Default black
-//                            fontStyle: 'Helvetica', //Default Arial
-                                sidePadding: 50 //Default 20 (as a percentage)
-                        ]
-                    ],
                 ]
         ]
 

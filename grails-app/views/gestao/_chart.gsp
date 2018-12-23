@@ -20,13 +20,13 @@
                       noSelection="['': 'Mês']"/>
         </g:if>
         <g:if test="${filtros.containsKey('nomeRegional')}">
-            <g:select name="nomeRegional" from="${session.regionais}"
+            <g:select name="nomeRegional" from="${ org.apoiasuas.util.Cache.regionais }"
                       class="many-to-one select-regional form-control"
                       value="${filtros.nomeRegional}"
                       noSelection="['': 'Regional']" onchange="changeSelectRegional(this)"/>
         </g:if>
         <g:if test="${filtros.containsKey('idServico')}">
-            <g:select name="idServico" from="${session.servicos}"
+            <g:select name="idServico" from="${ org.apoiasuas.util.Cache.servicosEncaminhamento }"
                       optionKey="id" optionValue="nome"
                       value="${filtros.idServico}"
                       class="many-to-one select-servico form-control"

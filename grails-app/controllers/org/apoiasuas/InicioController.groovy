@@ -7,6 +7,7 @@ import org.apoiasuas.redeSocioAssistencial.ServicoSistema
 import org.apoiasuas.redeSocioAssistencial.ServicoSistemaService
 import org.apoiasuas.redeSocioAssistencial.UsuarioSistema
 import org.apoiasuas.redeSocioAssistencial.UsuarioSistemaService
+import org.apoiasuas.util.Cache
 import org.apoiasuas.util.SegurancaHelper
 
 /**
@@ -37,7 +38,7 @@ class InicioController {
                 return render(view:'index');
             }
             SegurancaHelper.logout(session);
-            ServicoSistema ss = servicoSistemaService.buscaPeloEmail(payLoad.getEmail());
+            ServicoSistema ss = Cache.getServico(payLoad.getEmail());
             UsuarioSistema us = usuarioSistemaService.buscaPeloEmail(payLoad.getEmail());
             if (! us) {
                 request.mensagemErro = "Operador ${payLoad.getEmail()} não autorizado."

@@ -16,11 +16,9 @@
 
         <div id="list-familia" class="content scaffold-list" role="main">
 
-            <g:render template="filtros"/>
+            <g:render template="/inicio/mensagens"/>
 
-            <g:if test="${flash.message}">
-                <div class="message" role="status">${flash.message}</div>
-            </g:if>
+            <g:render template="filtros"/>
 
             <table class="tabela-familias">
                 <thead>

@@ -75,7 +75,7 @@ class CustomizadaTagLib {
         comumEdicao(attrs);
         if (attrs.value in Date)
             attrs.value = ((Date)attrs.value).format("dd/MM/yyyy");
-        out << g.campoEdicao(template: '/layouts/campoEdicao',
+        out << g.campoEdicao(template: '/layouts/campoEdicao', classesDiv: attrs.classesDiv,
                 beanCamposEdicao: attrs.beanCamposEdicao, quebraLinha: attrs.quebraLinha,
                 name: attrs.name, titulo: attrs.titulo, helpTooltip: attrs.helpTooltip, obrigatorio: attrs.obrigatorio) {
             g.textField(attrs);
@@ -96,7 +96,7 @@ class CustomizadaTagLib {
         if (attrs.value in Date)
             attrs.value = ((Date)attrs.value).format("dd/MM/yyyy");
         out << g.campoEdicao(template: '/layouts/campoEdicao',
-                beanCamposEdicao: attrs.beanCamposEdicao, quebraLinha: attrs.quebraLinha,
+                beanCamposEdicao: attrs.beanCamposEdicao, quebraLinha: attrs.quebraLinha, classesDiv: attrs.classesDiv,
                 name: attrs.name, titulo: "", helpTooltip: attrs.helpTooltip, obrigatorio: attrs.obrigatorio) {
             out << g.checkBox(attrs);
             out << " "+attrs.titulo;
@@ -115,8 +115,23 @@ class CustomizadaTagLib {
     def campoEdicaoSelect = { attrs, body ->
         //<g:textField name="${_name}" size="60" maxlength="255" value="${_bean?.(_name+'')}" placeholder="${_placeholder}"/>
         comumEdicao(attrs);
+
+        //o valor do select será setado aa partir de um objeto, e não de um id, como prevê a tag original
+        if (attrs.containsKey('objectValue')) {
+            boolean contido = false;
+            attrs.from.each{
+                if (it.id == attrs.objectValue?.id)
+                    contido = true;
+            }
+            if (attrs.objectValue && ! contido)
+                attrs.from = attrs.from + attrs.objectValue
+            attrs.value = attrs.objectValue?.id
+            attrs.remove("objectValue");
+        }
+
+
         out << g.campoEdicao(template: '/layouts/campoEdicao',
-                beanCamposEdicao: attrs.beanCamposEdicao, quebraLinha: attrs.quebraLinha,
+                beanCamposEdicao: attrs.beanCamposEdicao, quebraLinha: attrs.quebraLinha, classesDiv: attrs.classesDiv,
                 name: attrs.name, titulo: attrs.titulo, helpTooltip: attrs.helpTooltip, obrigatorio: attrs.obrigatorio) {
             g.select(attrs);
         }
@@ -153,17 +168,16 @@ class CustomizadaTagLib {
      * @attr quebraLinha se presente e verdadeiro, adiciona a classe css quebra-linha
      * @attr helpTooltip tooltip que aparece ao lado do titulo. pode ser uma string ou uma chave do arquivo de internacionalizacao
      * @attr obrigatorio sinaliza o campo como obrigatório
-     * @attr classesDiv classes css a serem inseridas no div (uma ou mais separadas por virgulas)
+     * @attr classesDiv classes css a serem inseridas no div (uma ou mais separadas por espaços)
      */
     def campoEdicao = { attrs, body ->
         //<g:textArea name="${_name}" rows="8" value="${_bean?.(_name+'')}" placeholder="${_placeholder}"/>
         comumEdicao(attrs);
 
-        if (! attrs.rows)
-            attrs.rows = 8;
         out << render(template: '/layouts/campoEdicao',
                 model: [beanCamposEdicao: attrs.beanCamposEdicao, quebraLinha: attrs.quebraLinha,
-                        name: attrs.name, titulo: attrs.titulo, helpTooltip: attrs.helpTooltip, classesDiv: attrs.classesDiv,
+                        name: attrs.name, titulo: attrs.titulo, helpTooltip: attrs.helpTooltip,
+                        classesDiv: (attrs.classesDiv ?: ''), // + ' input-group',
                         obrigatorio: attrs.obrigatorio]) {
             raw(body())
         }
@@ -172,6 +186,7 @@ class CustomizadaTagLib {
     private void comumEdicao(Map attrs) {
         attrs.beanCamposEdicao = attrs.beanCamposEdicao ?: request['beanCamposEdicao'] ?: null;
         attrs.value = attrs.value ?: attrs.beanCamposEdicao?.(attrs?.name);
+        attrs.class = (attrs.class ?: "") + " form-control"
     }
 
     /**
@@ -219,15 +234,25 @@ class CustomizadaTagLib {
                     out << '\n ' + g.actionSubmit(value: "Não será atendida atualmente", action:'naoAtender', class: 'botao-acao btn-default btn');
                 if (familia.situacao != SituacaoPrograma.NAO_LOCALIZADA)
                     out << '\n ' + g.actionSubmit(value: "Não foi localizada", action:'naoLocalizada', class: 'botao-acao btn-default btn');
-                if (familia.situacao == SituacaoPrograma.INDICADA_SERVICO)
+                if (familia.situacao == SituacaoPrograma.INDICADA_SERVICO) {
+                    out << '\n ' + g.actionSubmit(value: "Alterar", action:'edit', class: 'botao-acao btn-default btn');
                     out << '\n ' + g.actionSubmit(value: "Excluir", action:'excluir', class: 'botao-acao btn-default btn');
+                }
             }
 
             //acoes para a gestao:
             if (acesso == Acesso.GESTAO) {
+                //Alteração sempre permitida
+                out << '\n ' + g.actionSubmit(value: "Alterar", action:'edit', class: 'botao-acao btn-default btn');
                 if (familia.situacao == SituacaoPrograma.INDICADA_SERVICO) {
                     out << '\n ' + g.actionSubmit(value: "Liberar inserção no programa", action: 'liberarInsercao', class: 'botao-acao btn-default btn');
-                    out << '\n ' + g.actionSubmit(value: "Não será atendida atualmente", action:'naoAtender', class: 'botao-acao btn-default btn');
+                    out << '\n ' + g.actionSubmit(value: "Indefirir inserção no programa", action:'indeferirPelaGestao', class: 'botao-acao btn-default btn');
+                }
+                if (familia.situacao == SituacaoPrograma.INSERCAO_RECUSADA_GESTAO) {
+                    out << '\n ' + g.actionSubmit(value: "Liberar inserção no programa", action: 'liberarInsercao', class: 'botao-acao btn-default btn');
+                }
+                if (familia.situacao == SituacaoPrograma.INSERCAO_LIBERADA) {
+                    out << '\n ' + g.actionSubmit(value: "Indefirir inserção no programa", action:'indeferirPelaGestao', class: 'botao-acao btn-default btn');
                 }
                 if (familia.situacao in [SituacaoPrograma.INSERCAO_LIBERADA, SituacaoPrograma.INSERIDA])
                     out << '\n ' + g.actionSubmit(value: "Registrar concessão", action:'registrarConcessao', class: 'botao-acao btn-default btn');

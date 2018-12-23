@@ -32,12 +32,13 @@ class FamiliaController {
 //        respond familiaService.list(params), model:[familiaCount: familiaService.count()];
     }
 
-    def show(Long id) {
-        Familia familia = familiaService.get(id)
+    def show(Familia familia) {
+//        Familia familia = familiaService.get(id)
         if (! familia)
-            respond null
+            notFound()
         else
-            respond familia, [model: [ultimaConcessao: familiaService.getUltimaConcessao(familia), historicoCompleto: familiaService.getHistoricoCompleto(familia)]]
+            render view:'show', model: [familia: familia, ultimaConcessao: familiaService.getUltimaConcessao(familia), historicoCompleto: familiaService.getHistoricoCompleto(familia)]
+//            respond familia, [model: [ultimaConcessao: familiaService.getUltimaConcessao(familia), historicoCompleto: familiaService.getHistoricoCompleto(familia)]]
     }
 
     def create() {
@@ -46,30 +47,51 @@ class FamiliaController {
 
     def inserir(Familia familia) {
         familia.situacao = SituacaoPrograma.INSERIDA;
-//        familiaService.imprimirFormulario(familia, SegurancaHelper.getCredencial(session));
         familiaService.grava(familia, SegurancaHelper.getCredencial(session));
-        flash.message = "Família inserida no programa. RF: "+familia.nomeReferencia
+        flash.sucesso = "Familia inserida no programa. RF: "+familia.nomeReferencia
         forward(action: 'index');
+
+/*
+        familiaService.imprimirFormulario(familia, SegurancaHelper.getCredencial(session));
+        response.contentType = 'application/octet-stream'
+        if (reportsDTO) {
+            //Usa o nome de arquivo indicado no primeiro (em geral unico) elemento da lista de reportsDTO
+            response.setHeader 'Content-disposition', "attachment; filename=\"${reportsDTO[0].nomeArquivo}\""
+            apoiaSuasService.appendReports(response.outputStream, reportsDTO)
+//            reportsDTO.report.process(reportsDTO.context, response.outputStream);
+        } else {
+            response.setHeader 'Content-disposition', "signal; filename=\"erro-favor-cancelar\""
+        }
+        response.outputStream.flush()
+*/
+
     }
 
     def naoAtender(Familia familia) {
         familia.situacao = SituacaoPrograma.NAO_ATENDIDA;
         familiaService.grava(familia, SegurancaHelper.getCredencial(session));
-        flash.message = "Família marcada como não atendida. RF: "+familia.nomeReferencia
+        flash.sucesso = "Familia marcada como não atendida. RF: "+familia.nomeReferencia
         forward(action: 'index');
     }
 
     def naoLocalizada(Familia familia) {
         familia.situacao = SituacaoPrograma.NAO_LOCALIZADA;
         familiaService.grava(familia, SegurancaHelper.getCredencial(session));
-        flash.message = "Família marcada como não localizada. RF: "+familia.nomeReferencia
+        flash.sucesso = "Familia marcada como não localizada. RF: "+familia.nomeReferencia
         forward(action: 'index');
     }
 
     def liberarInsercao(Familia familia) {
         familia.situacao = SituacaoPrograma.PRE_SELECIONADA;
         familiaService.grava(familia, SegurancaHelper.getCredencial(session));
-        flash.message = "Família liberada para inserção no programa. RF: "+familia.nomeReferencia
+        flash.sucesso = "Familia liberada para inserção no programa. RF: "+familia.nomeReferencia
+        forward(action: 'index');
+    }
+
+    def indeferirPelaGestao(Familia familia) {
+        familia.situacao = SituacaoPrograma.INSERCAO_RECUSADA_GESTAO;
+        familiaService.grava(familia, SegurancaHelper.getCredencial(session));
+        flash.sucesso = "Familia indefirida. RF: "+familia.nomeReferencia
         forward(action: 'index');
     }
 
@@ -78,7 +100,7 @@ class FamiliaController {
         forward(action: 'index');
     }
 
-    def save(Familia familia) {
+    def saveOld(Familia familia) {
         if (familia == null) {
             notFound()
             return
@@ -93,7 +115,7 @@ class FamiliaController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'familia.label', default: 'Familia'), familia.id])
+                flash.sucesso = 'Nova indicação registrada com sucesso.'
                 redirect familia
             }
             '*' { respond familia, [status: CREATED] }
@@ -104,7 +126,7 @@ class FamiliaController {
         respond familiaService.get(id)
     }
 
-    def update(Familia familia) {
+    def updateOld(Familia familia) {
         if (familia == null) {
             notFound()
             return
@@ -119,11 +141,47 @@ class FamiliaController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'familia.label', default: 'Familia'), familia.id])
+                flash.sucesso = 'Indicação alterada com sucesso.'
                 redirect familia
             }
             '*'{ respond familia, [status: OK] }
         }
+    }
+
+
+    def save(Familia familia) {
+        if (! familia)
+            return notFound()
+
+        boolean modoCriacao = familia.id == null
+
+        if (modoCriacao && familia.servicoSistemaSeguranca == null)
+            familia.servicoSistemaSeguranca = ServicoSistema.get(session.credencial.servicoSistema.id);
+
+        //Validações:
+        boolean validado = familia.validate();
+        if ((! familia.monoparentalFeminina) || ! (familia.getTotalIndicadores() > 2)) {
+            validado = false;
+            familia.errors.rejectValue("", "", "Para ser indicada a família deve ser obrigatoriamente monoparental feminina, " +
+                    "de renda zero e com pelo menos dois outros indicadores de vulnerabilidade.");
+        }
+        if (! familia.nisReferencia || (! familia.nisReferencia.matches("[0-9]+")) || (familia.nisReferencia.length() != 11)) {
+            validado = false;
+            familia.errors.rejectValue("", "", "NIS é obrigatório e deve conter 11 digitios numéricos");
+        }
+
+        //Grava
+        if (validado) {
+            familiaService.grava(familia, session.credencial);
+        } else {
+            //exibe o formulario novamente em caso de problemas na validacao
+            return render(view: modoCriacao ? "create" : "edit", model: [familia: familia]) //, model: getModelEdicao(servicoInstance, urlImagem))
+        }
+
+        flash.sucesso = "Indicação registrada com sucesso."
+        show(familia);
+//        forward action: 'show', params: [familia: familia]
+//        render view: 'show', model: [familia: familia];
     }
 
     def excluir(Familia familia) {
@@ -136,7 +194,7 @@ class FamiliaController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = "Familia de ${familia.nomeReferencia} excluida da listagem"
+                flash.sucesso = "Familia de ${familia.nomeReferencia} excluida da listagem"
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }

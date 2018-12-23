@@ -6,12 +6,16 @@
         <g:if env="development"><asset:stylesheet src="errors.css"/></g:if>
     </head>
     <body>
+%{--
         <g:if env="production">
             <ul class="errors">
                 <li>An error has occurred</li>
             </ul>
         </g:if>
         <g:else>
+--}%
+            <g:render template="/inicio/menu"/>
+
             <g:if test="${Throwable.isInstance(exception)}">
                 <g:renderException exception="${exception}" />
             </g:if>
@@ -26,6 +30,6 @@
                     <li>Path: ${path}</li>
                 </ul>
             </g:else>
-        </g:else>
+        %{--</g:else>--}%
     </body>
 </html>

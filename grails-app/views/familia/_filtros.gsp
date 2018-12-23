@@ -1,4 +1,4 @@
-<%@ page import="org.apoiasuas.redeSocioAssistencial.ServicoSistema; org.apoiasuas.util.SegurancaHelper; org.apoiasuas.cidadao.Cidadao; org.apoiasuas.cidadao.Familia" %>
+<%@ page import="org.apoiasuas.util.Cache; org.apoiasuas.redeSocioAssistencial.ServicoSistema; org.apoiasuas.util.SegurancaHelper; org.apoiasuas.cidadao.Cidadao; org.apoiasuas.cidadao.Familia" %>
 <g:form name="formFiltragem" class="form-filtro form-inline" action="list">
 
     <g:if test="${! SegurancaHelper.getCredencial(session).atendimento}"> %{--ocultar quando for o banco de alimentos--}%
@@ -31,19 +31,11 @@
     <g:if test="${! SegurancaHelper.getCredencial(session).encaminhamento}">
         <div class="input-group">
             <span class="input-group-addon">Serviço</span>
-            <g:select name="servicoSistema" from="${ServicoSistema.findAll().sort{it.nome} }"
+            <g:select name="servicoSistema" from="${ org.apoiasuas.util.Cache.getServicosEncaminhamento() }"
                               optionKey="id" optionValue="nome" value="${filtrosOperador?.servicoSistema?.id}"
                               style="width: 15em;"
                               class="many-to-one form-control" noSelection="['': 'Todos']" onChange="atualiza();"/>
         </div>
-%{--
-        <span class="campoFiltragem">
-            Serviço <g:select name="servicoSistema" from="${ServicoSistema.findAll().sort{it.nome} }"
-                              optionKey="id" optionValue="nome" value="${filtrosOperador?.servicoSistema?.id}"
-                              style="width: 15em;"
-                              class="many-to-one form-control" noSelection="['': 'Todos']" onChange="atualiza();"/>
-        </span>
---}%
     </g:if>
 
     <div class="input-group">

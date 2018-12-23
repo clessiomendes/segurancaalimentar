@@ -10,10 +10,9 @@
         <g:render template="/inicio/menu"/>
 
         <div id="show-familia" class="content scaffold-show" role="main">
-            <h1>Familia de ${this.familia.nomeReferencia}</h1>
-            <g:if test="${flash.message}">
-                <div class="message" role="status">${flash.message}</div>
-            </g:if>
+            <h1>Familia de ${familia.nomeReferencia}</h1>
+
+            <g:render template="/inicio/mensagens"/>
 
             <div style="display: inline-block">
                 <g:acoesFamilia familia="${this.familia}"/>

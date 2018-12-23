@@ -1,14 +1,14 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="Gradle : segurancaalimentar:segurancaalimentar : segurancaalimentar-0.1.war">
-    <output-path>$PROJECT_DIR$/out/artifacts/segurancaalimentar</output-path>
+  <artifact type="war" name="Gradle : segurancaalimentar:segalim : segalim-0.1.war">
+    <output-path>$PROJECT_DIR$/out/artifacts/segalim</output-path>
     <properties id="gradle-properties">
       <options external-project-path="$PROJECT_DIR$" />
     </properties>
-    <root id="archive" name="segurancaalimentar-0.1.war">
-      <element id="javaee-facet-resources" facet="segurancaalimentar/web/Web Gradle : segurancaalimentar-0.1.war" />
+    <root id="archive" name="segalim-0.1.war">
+      <element id="javaee-facet-resources" facet="segalim/web/Web Gradle : segalim-0.1.war" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="segurancaalimentar" />
+          <element id="module-output" name="segalim" />
           <element id="dir-copy" path="$PROJECT_DIR$/build/resources/main" />
         </element>
         <element id="directory" name="lib">
@@ -31,9 +31,19 @@
           <element id="library" level="project" name="Gradle: org.grails.plugins:hibernate5:6.1.10" />
           <element id="library" level="project" name="Gradle: org.hibernate:hibernate-core:5.1.5.Final" />
           <element id="library" level="project" name="Gradle: org.grails.plugins:gsp:3.3.1" />
+          <element id="library" level="project" name="Gradle: com.google.api-client:google-api-client:1.25.0" />
+          <element id="library" level="project" name="Gradle: com.google.http-client:google-http-client-jackson:1.25.0" />
           <element id="library" level="project" name="Gradle: org.glassfish.web:el-impl:2.1.2-b03" />
           <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-jdbc:8.5.32" />
-          <element id="library" level="project" name="Gradle: com.bertramlabs.plugins:asset-pipeline-grails:2.14.8" />
+          <element id="library" level="project" name="Gradle: com.bertramlabs.plugins:asset-pipeline-grails:2.14.6" />
+          <element id="library" level="project" name="Gradle: com.h2database:h2:1.4.197" />
+          <element id="library" level="project" name="Gradle: org.postgresql:postgresql:9.3-1101-jdbc41" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.xdocreport.core:1.0.4" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.xdocreport.document:1.0.4" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.xdocreport.template:1.0.4" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.xdocreport.document.docx:1.0.4" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.xdocreport.document.odt:1.0.4" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.xdocreport.template.velocity:1.0.4" />
           <element id="library" level="project" name="Gradle: ch.qos.logback:logback-classic:1.1.11" />
           <element id="library" level="project" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.25" />
           <element id="library" level="project" name="Gradle: org.slf4j:jul-to-slf4j:1.7.25" />
@@ -81,9 +91,17 @@
           <element id="library" level="project" name="Gradle: commons-lang:commons-lang:2.6" />
           <element id="library" level="project" name="Gradle: org.grails:grails-plugin-codecs:3.3.8" />
           <element id="library" level="project" name="Gradle: org.grails:grails-web-jsp:3.3.1" />
+          <element id="library" level="project" name="Gradle: com.google.oauth-client:google-oauth-client:1.25.0" />
+          <element id="library" level="project" name="Gradle: com.google.http-client:google-http-client-jackson2:1.25.0" />
+          <element id="library" level="project" name="Gradle: com.google.guava:guava:20.0" />
+          <element id="library" level="project" name="Gradle: com.google.http-client:google-http-client:1.25.0" />
+          <element id="library" level="project" name="Gradle: org.codehaus.jackson:jackson-core-asl:1.9.13" />
           <element id="library" level="project" name="Gradle: javax.el:el-api:2.1.2-b03" />
           <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-juli:8.5.32" />
-          <element id="library" level="project" name="Gradle: com.bertramlabs.plugins:asset-pipeline-core:2.14.8" />
+          <element id="library" level="project" name="Gradle: com.bertramlabs.plugins:asset-pipeline-core:2.14.6" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter:1.0.4" />
+          <element id="library" level="project" name="Gradle: org.apache.velocity:velocity:1.7" />
+          <element id="library" level="project" name="Gradle: oro:oro:2.0.8" />
           <element id="library" level="project" name="Gradle: ch.qos.logback:logback-core:1.1.11" />
           <element id="library" level="project" name="Gradle: commons-logging:commons-logging:1.2" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-aop:4.3.18.RELEASE" />
@@ -122,8 +140,12 @@
           <element id="library" level="project" name="Gradle: javax.el:javax.el-api:2.2.4" />
           <element id="library" level="project" name="Gradle: xml-apis:xml-apis:1.4.01" />
           <element id="library" level="project" name="Gradle: org.grails:grails-codecs:3.3.8" />
-          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
+          <element id="library" level="project" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.8.11" />
+          <element id="library" level="project" name="Gradle: org.apache.httpcomponents:httpclient:4.5.6" />
+          <element id="library" level="project" name="Gradle: com.google.j2objc:j2objc-annotations:1.1" />
+          <element id="library" level="project" name="Gradle: commons-collections:commons-collections:3.2.2" />
+          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
           <element id="library" level="project" name="Gradle: org.codehaus.groovy:groovy-json:2.4.15" />
           <element id="library" level="project" name="Gradle: org.grails:grails-taglib:3.3.1" />
           <element id="library" level="project" name="Gradle: org.grails:grails-web-taglib:3.3.1" />
@@ -131,23 +153,13 @@
           <element id="library" level="project" name="Gradle: commons-validator:commons-validator:1.5.1" />
           <element id="library" level="project" name="Gradle: javax.validation:validation-api:1.1.0.Final" />
           <element id="library" level="project" name="Gradle: commons-codec:commons-codec:1.10" />
-          <element id="library" level="project" name="Gradle: commons-collections:commons-collections:3.2.2" />
-          <element id="library" level="project" name="Gradle: com.google.api-client:google-api-client:1.25.0" />
-          <element id="library" level="project" name="Gradle: com.google.http-client:google-http-client-jackson:1.25.0" />
-          <element id="library" level="project" name="Gradle: org.postgresql:postgresql:9.3-1101-jdbc41" />
-          <element id="library" level="project" name="Gradle: com.google.oauth-client:google-oauth-client:1.25.0" />
-          <element id="library" level="project" name="Gradle: com.google.http-client:google-http-client-jackson2:1.25.0" />
-          <element id="library" level="project" name="Gradle: com.google.guava:guava:20.0" />
-          <element id="library" level="project" name="Gradle: com.google.http-client:google-http-client:1.25.0" />
-          <element id="library" level="project" name="Gradle: org.codehaus.jackson:jackson-core-asl:1.9.13" />
-          <element id="library" level="project" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" />
-          <element id="library" level="project" name="Gradle: org.apache.httpcomponents:httpclient:4.5.6" />
-          <element id="library" level="project" name="Gradle: com.google.j2objc:j2objc-annotations:1.1" />
           <element id="library" level="project" name="Gradle: org.apache.httpcomponents:httpcore:4.4.10" />
+          <element id="library" level="project" name="Gradle: org.hibernate:hibernate-ehcache:5.1.5.Final" />
+          <element id="library" level="project" name="Gradle: net.sf.ehcache:ehcache:2.10.5" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/out/artifacts/segurancaalimentar/exploded/segurancaalimentar-0.1.war/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/out/artifacts/segalim/exploded/segalim-0.1.war/META-INF/MANIFEST.MF" />
       </element>
     </root>
   </artifact>

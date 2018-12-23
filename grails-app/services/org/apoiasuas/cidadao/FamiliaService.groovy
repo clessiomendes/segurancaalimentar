@@ -1,5 +1,7 @@
 package org.apoiasuas.cidadao
 
+//import fr.opensagres.xdocreport.document.registry.XDocReportRegistry
+//import fr.opensagres.xdocreport.template.TemplateEngineKind
 import grails.gorm.PagedResultList
 import grails.gorm.services.Service
 import grails.gorm.transactions.Transactional
@@ -29,19 +31,20 @@ abstract class FamiliaService {
     @Transactional
     public abstract Familia save(Familia familia)
 
-/*
     public Map imprimirFormulario(Familia familia, Credencial credencial) {
         Map result = [:]
 
 // 1) Load doc file and set Velocity template engine and cache it to the registry
-        InputStream template = new ByteArrayInputStream(formulario.modelos.find {it.id == idModelo}.arquivo );
+//        InputStream template = new ByteArrayInputStream("c://temp//template.docx");
+        InputStream template = new FileInputStream("c://temp//template.docx");
         result.report = XDocReportRegistry.getRegistry().loadReport(template, TemplateEngineKind.Velocity);
 
 // 2) Create Java model context
         result.context = result.report.createContext();
         result.fieldsMetadata = result.report.createFieldsMetadata();
+
+        return result;
     }
-*/
 
     @Transactional
     public void grava(Familia familia, Credencial credencial) {
@@ -57,6 +60,8 @@ abstract class FamiliaService {
             else {
                 throw new RuntimeException("Acesso negado a Sugestão de Família")
             }
+
+            //adiciona automaticamente um membro na familia
             novaReferencia = new Cidadao(
                     nome: familia.nomeReferencia,
                     NIS: familia.nisReferencia,
@@ -64,16 +69,24 @@ abstract class FamiliaService {
                     familia: familia
             );
             familia.membros << novaReferencia;
+            acao = new HistoricoFamilia(
+                    familia: familia,
+                    data: new Date(),
+                    acao: familia.situacao,
+                    usuarioSistema: credencial.usuarioSistema,
+                    servicoSistemaSeguranca: credencial.servicoSistema,
+            );
+        } else {
+            Cidadao referencia = familia.membros.find { it.parentesco == Cidadao.PARENTESCO_REFERENCIA }
+            if (referencia) {
+                referencia.nome = familia.nomeReferencia;
+                referencia.NIS = familia.nisReferencia;
+//                referencia.save();
+            }
+
         }
         this.save(familia);
-        acao = new HistoricoFamilia(
-                familia: familia,
-                data: new Date(),
-                acao: familia.situacao,
-                usuarioSistema: credencial.usuarioSistema,
-                servicoSistemaSeguranca: credencial.servicoSistema,
-        );
-        acao.save();
+        acao?.save();
     }
 
     @Transactional

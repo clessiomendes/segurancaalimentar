@@ -37,13 +37,13 @@ class Familia {
 
     ServicoSistema servicoSistemaSeguranca
 
-    Boolean gestante
     Boolean pcd
-    Boolean idoso
+    Boolean gestante
+    Boolean nutriz
     Boolean criancaPequena
     Boolean crianca
     Boolean adolescente
-    Boolean nutriz
+    Boolean idoso
     Boolean monoparentalFeminina
 
     Set<Cidadao> membros = []
@@ -57,6 +57,7 @@ class Familia {
         bairro (nullable: true)
         nisReferencia (nullable: true)
         sigps (nullable: true)
+        servicoSistemaSeguranca (nullable: false)
     }
 
     static mapping = {
@@ -111,6 +112,16 @@ class Familia {
         };
     }
 
+    public int getTotalIndicadores() {
+        return  (monoparentalFeminina ? 1 : 0) +
+                (pcd ? 1 : 0) +
+                (gestante ? 1 : 0) +
+                (nutriz ? 1 : 0) +
+                (criancaPequena ? 1 : 0) +
+                (crianca ? 1 : 0) +
+                (adolescente ? 1 : 0) +
+                (idoso ? 1 : 0);
+    }
 }
 
 /**
@@ -122,7 +133,8 @@ enum SituacaoPrograma {
     INDICADA_SERVICO("Indicada pelo Serviço", "Indicar"),
     INSERIDA("Inserida no Programa", "Inserir no Programa"),
     INSERCAO_LIBERADA("Liberada pela Gestão", "Liberar para Inserção"),
-    NAO_ATENDIDA("Não Atendida Atualmente", "Não Inserir Atualmente"),
+    INSERCAO_RECUSADA_GESTAO("Inserção Indeferida pela Gestão", "Indeferir"),
+    NAO_ATENDIDA("Inserção Indefirida pelo Serviço", "Não Inserir Atualmente"),
     NAO_LOCALIZADA("Não Localizada", "Não Localizada"),
     REMOVIDA("Desligada do Programa", "Desligar do Programa")
 
@@ -145,5 +157,4 @@ enum SituacaoPrograma {
         }
         return result;
     }
-
 }

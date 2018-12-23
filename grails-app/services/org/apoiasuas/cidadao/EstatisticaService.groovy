@@ -47,6 +47,8 @@ class EstatisticaService {
             Iterator iterator = resultado.iterator()
             while (iterator.hasNext()) {
                 def row = iterator.next();
+                if (! row[0])
+                    continue;
                 result.put(row[0], row[1])
             }
             return result;
@@ -95,6 +97,9 @@ class EstatisticaService {
             Iterator iterator = resultado.iterator()
             while (iterator.hasNext()) {
                 def row = iterator.next();
+                if (! row[0])
+                    continue;
+
                 result.put(row[0], row[1])
             }
             return result;
@@ -141,6 +146,9 @@ class EstatisticaService {
             Iterator iterator = resultado.iterator()
             while (iterator.hasNext()) {
                 def row = iterator.next();
+                if (! row[0])
+                    continue;
+
                 SituacaoPrograma situacao = SituacaoPrograma.valueOf(row[0]);
                 //confere antes se esta eh uma situacao que deve fazer parte do resultado
                 if (situacoes.contains(situacao))
@@ -197,6 +205,9 @@ class EstatisticaService {
             Iterator iterator = resultado.iterator()
             while (iterator.hasNext()) {
                 def row = iterator.next();
+                if ((! row[0]) || (! row[1]))
+                    continue;
+
                 Date periodo = row[0];
                 SituacaoPrograma acao = SituacaoPrograma.valueOf(row[1])
                 Integer quantidade = row[2];

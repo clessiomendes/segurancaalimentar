@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/segalim.iml" filepath="$PROJECT_DIR$/segalim.iml" />
       <module fileurl="file://$PROJECT_DIR$/segurancaalimentar.iml" filepath="$PROJECT_DIR$/segurancaalimentar.iml" />
     </modules>
   </component>

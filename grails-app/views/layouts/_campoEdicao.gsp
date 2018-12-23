@@ -11,7 +11,9 @@
     ) : '';
 
 %>
-<div class="fieldcontain ${_classesDiv} ${hasErrors(bean: beanCamposEdicao, field: name, 'error')}">
-    <label>${titulo}${_obrigatorio}${_helpTooltip}</label>
-    ${raw(body())}
-</div>
+%{--<div class="form-group">--}%
+    <div class="form-group ${_classesDiv} ${hasErrors(bean: beanCamposEdicao, field: name, 'error')}">
+        <label>${titulo}${_obrigatorio}${_helpTooltip}</label>
+        ${raw(body())}
+    </div>
+%{--</div>--}%
