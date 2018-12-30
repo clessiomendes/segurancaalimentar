@@ -134,4 +134,4 @@ gradle-app.setting
 out/
 data/segalim.backup
 *.backup
-
+*.log

@@ -20,10 +20,12 @@
                               style="width:15em; display: inline-block" from="${Acesso.values()}"/><br><br>
                 </g:if>
                 Entre com o email e senha do seu serviço<br><br>
+
                 <button title="Clique para entrar com o email e senha do seu serviço"
                         class="btn btn-default " onclick="handleSignInClick()">
                     <i class="fas fa-envelope"></i> @pbh
                 </button>
+
                 <br><br>
         </h1>
 

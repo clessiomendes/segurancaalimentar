@@ -1,3 +1,5 @@
+import grails.util.Environment
+
 buildscript {
     repositories {
         mavenLocal()
@@ -49,26 +51,25 @@ dependencies {
     compile "org.grails.plugins:gsp"
     console "org.grails:grails-console"
     profile "org.grails.profiles:web"
-    runtime "org.glassfish.web:el-impl:2.1.2-b03"
-    runtime "org.apache.tomcat:tomcat-jdbc"
-    runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.14.6"
-    assets "com.bertramlabs.plugins:less-asset-pipeline:2.14.6"
+//    runtime "org.glassfish.web:el-impl:2.1.2-b03"
+    compile "org.apache.tomcat:tomcat-jdbc"
+    compile "com.bertramlabs.plugins:asset-pipeline-grails:2.14.6"
+    compile "com.bertramlabs.plugins:less-asset-pipeline:2.14.6"
     testCompile "org.grails:grails-gorm-testing-support"
     testCompile "org.grails:grails-web-testing-support"
 
-    runtime "com.h2database:h2"
     runtime "org.postgresql:postgresql:9.3-1101-jdbc41"
     compile 'com.google.api-client:google-api-client:1.25.0'
     compile 'com.google.http-client:google-http-client-jackson:1.25.0'
 
     //XDocReport (geracao de relatorio a partir de templates docx ou odt)
-    runtime "fr.opensagres.xdocreport:fr.opensagres.xdocreport.core:1.0.4"
-    runtime "fr.opensagres.xdocreport:fr.opensagres.xdocreport.document:1.0.4"
-    runtime "fr.opensagres.xdocreport:fr.opensagres.xdocreport.template:1.0.4"
+    compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.core:1.0.4"
+    compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.document:1.0.4"
+    compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.template:1.0.4"
 //        compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter:1.0.4"
-    runtime "fr.opensagres.xdocreport:fr.opensagres.xdocreport.document.docx:1.0.4" //suporte a .docx
-    runtime "fr.opensagres.xdocreport:fr.opensagres.xdocreport.document.odt:1.0.4" //suporte a .odt
-    runtime "fr.opensagres.xdocreport:fr.opensagres.xdocreport.template.velocity:1.0.4" //suporte a velocity
+    compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.document.docx:1.0.4" //suporte a .docx
+    compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.document.odt:1.0.4" //suporte a .odt
+    compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.template.velocity:1.0.4" //suporte a velocity
 //        compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.docx.xwpf:1.0.4" //conversao PDF e XHTML
 //        compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.docx.docx4j:1.0.4" //conversao PDF e XHTML
 //        compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.fop.docx:1.0.4" //conversao PDF e XHTML
@@ -77,6 +78,26 @@ dependencies {
 //    compile 'org.grails.plugins:spring-security-core:3.2.3'
 //    compile 'org.grails.plugins:spring-security-oauth2:1.1.0'
 //    compile 'org.grails.plugins:spring-security-oauth2-google:1.1.0'
+
+    //   DEPENDENCIAS DO OPENCSV 4.4 (DECLARADAS EXPLICITAMENTE PARA INCORPORAR O MESMO AO CODIGO DO PROJETO)
+//    compile "com.opencsv:opencsv:4.4"
+    compile "commons-beanutils:commons-beanutils:1.9.3"
+    compile "org.apache.commons:commons-collections4:4.2"
+    compile "org.apache.commons:commons-lang3:3.8.1"
+    compile "org.apache.commons:commons-text:1.3"
+
+    if (grails.util.Environment.current == grails.util.Environment.DEVELOPMENT ) {
+        System.out.println("dependencias em desenvolvimento...")
+//        compile 'org.grails.plugins:p6spy-ui:3.0.0'
+
+//Biblioteca original p6spy:
+         compile group: 'p6spy', name: 'p6spy', version: '3.8.1'
+//         compile "p6spy:p6spy"
+    }
+
+    compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.docx.xwpf:2.0.1"
+    compile "fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.odt.odfdom:2.0.1"
+
 }
 
 bootRun {
@@ -104,4 +125,15 @@ assets {
 assets {
     minifyJs = true
     minifyCss = true
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'src/opencsv/java'
+        }
+        resources {
+            srcDirs 'src/opencsv/resources'
+        }
+    }
 }

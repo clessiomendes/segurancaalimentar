@@ -32,12 +32,15 @@ class FamiliaController {
 //        respond familiaService.list(params), model:[familiaCount: familiaService.count()];
     }
 
-    def show(Familia familia) {
-//        Familia familia = familiaService.get(id)
+    def show() {
+        //ao inves de usar o bind automatico do grails, carrega a familia com todas as colecoes internas em uma unica ida ao banco de dados
+        Familia familia = familiaService.get(params.id, true);
         if (! familia)
             notFound()
-        else
-            render view:'show', model: [familia: familia, ultimaConcessao: familiaService.getUltimaConcessao(familia), historicoCompleto: familiaService.getHistoricoCompleto(familia)]
+        else {
+            ConcessaoFamilia ultimaConcessao = familia.concessoes.sort{it.id}.reverse()[0];
+            render view: 'show', model: [familia: familia, ultimaConcessao: ultimaConcessao, historicoCompleto: familia.historico]
+        }
 //            respond familia, [model: [ultimaConcessao: familiaService.getUltimaConcessao(familia), historicoCompleto: familiaService.getHistoricoCompleto(familia)]]
     }
 
@@ -100,6 +103,7 @@ class FamiliaController {
         forward(action: 'index');
     }
 
+/*
     def saveOld(Familia familia) {
         if (familia == null) {
             notFound()
@@ -121,11 +125,13 @@ class FamiliaController {
             '*' { respond familia, [status: CREATED] }
         }
     }
+*/
 
     def edit(Long id) {
         respond familiaService.get(id)
     }
 
+/*
     def updateOld(Familia familia) {
         if (familia == null) {
             notFound()
@@ -147,7 +153,7 @@ class FamiliaController {
             '*'{ respond familia, [status: OK] }
         }
     }
-
+*/
 
     def save(Familia familia) {
         if (! familia)
@@ -155,8 +161,10 @@ class FamiliaController {
 
         boolean modoCriacao = familia.id == null
 
-        if (modoCriacao && familia.servicoSistemaSeguranca == null)
+        if (modoCriacao) {
             familia.servicoSistemaSeguranca = ServicoSistema.get(session.credencial.servicoSistema.id);
+            familia.sincronizadoCadUnico = false;
+        }
 
         //Validações:
         boolean validado = familia.validate();
@@ -178,9 +186,12 @@ class FamiliaController {
             return render(view: modoCriacao ? "create" : "edit", model: [familia: familia]) //, model: getModelEdicao(servicoInstance, urlImagem))
         }
 
-        flash.sucesso = "Indicação registrada com sucesso."
-        show(familia);
-//        forward action: 'show', params: [familia: familia]
+        if (modoCriacao)
+            flash.sucesso = "Indicação registrada com sucesso."
+        else
+            flash.sucesso = "Familia alterada com sucesso."
+//        show(familia);
+        forward action: 'show', params: [id: familia.id]
 //        render view: 'show', model: [familia: familia];
     }
 

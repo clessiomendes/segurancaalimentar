@@ -31,7 +31,7 @@ class Familia {
     String DDD2
     String telefone2
 
-    Date dataAtualizacaoCadunico
+    Boolean sincronizadoCadUnico
 
 //    Date dateCreated, lastUpdated;
 
@@ -47,7 +47,9 @@ class Familia {
     Boolean monoparentalFeminina
 
     Set<Cidadao> membros = []
-    static hasMany = [membros: Cidadao]
+    Set<HistoricoFamilia> historico = []
+    Set<ConcessaoFamilia> concessoes = []
+    static hasMany = [membros: Cidadao, historico: HistoricoFamilia, concessoes: ConcessaoFamilia]
 
     static transients = ['enderecoBasico', 'telefones']
 
@@ -58,12 +60,17 @@ class Familia {
         nisReferencia (nullable: true)
         sigps (nullable: true)
         servicoSistemaSeguranca (nullable: false)
+        sincronizadoCadUnico (nullable: false)
     }
 
     static mapping = {
         id generator: 'native', params: [sequence: 'sq_familia']
         servicoSistemaSeguranca column: 'servico_id'
         version column: 'versao'
+        membros cascade: "all-delete-orphan"
+        historico cascade: "all-delete-orphan"
+        concessoes cascade: "all-delete-orphan"
+        sincronizadoCadUnico defaultValue: false
 //        dateCreated column: 'data_criacao', type: 'date'
 //        lastUpdated column: 'ultima_alteracao', type: 'date'
     }

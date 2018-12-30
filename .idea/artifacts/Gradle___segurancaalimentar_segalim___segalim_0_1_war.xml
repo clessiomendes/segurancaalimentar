@@ -33,10 +33,8 @@
           <element id="library" level="project" name="Gradle: org.grails.plugins:gsp:3.3.1" />
           <element id="library" level="project" name="Gradle: com.google.api-client:google-api-client:1.25.0" />
           <element id="library" level="project" name="Gradle: com.google.http-client:google-http-client-jackson:1.25.0" />
-          <element id="library" level="project" name="Gradle: org.glassfish.web:el-impl:2.1.2-b03" />
           <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-jdbc:8.5.32" />
           <element id="library" level="project" name="Gradle: com.bertramlabs.plugins:asset-pipeline-grails:2.14.6" />
-          <element id="library" level="project" name="Gradle: com.h2database:h2:1.4.197" />
           <element id="library" level="project" name="Gradle: org.postgresql:postgresql:9.3-1101-jdbc41" />
           <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.xdocreport.core:1.0.4" />
           <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.xdocreport.document:1.0.4" />
@@ -96,10 +94,8 @@
           <element id="library" level="project" name="Gradle: com.google.guava:guava:20.0" />
           <element id="library" level="project" name="Gradle: com.google.http-client:google-http-client:1.25.0" />
           <element id="library" level="project" name="Gradle: org.codehaus.jackson:jackson-core-asl:1.9.13" />
-          <element id="library" level="project" name="Gradle: javax.el:el-api:2.1.2-b03" />
           <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-juli:8.5.32" />
           <element id="library" level="project" name="Gradle: com.bertramlabs.plugins:asset-pipeline-core:2.14.6" />
-          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter:1.0.4" />
           <element id="library" level="project" name="Gradle: org.apache.velocity:velocity:1.7" />
           <element id="library" level="project" name="Gradle: oro:oro:2.0.8" />
           <element id="library" level="project" name="Gradle: ch.qos.logback:logback-core:1.1.11" />
@@ -154,8 +150,45 @@
           <element id="library" level="project" name="Gradle: javax.validation:validation-api:1.1.0.Final" />
           <element id="library" level="project" name="Gradle: commons-codec:commons-codec:1.10" />
           <element id="library" level="project" name="Gradle: org.apache.httpcomponents:httpcore:4.4.10" />
-          <element id="library" level="project" name="Gradle: org.hibernate:hibernate-ehcache:5.1.5.Final" />
-          <element id="library" level="project" name="Gradle: net.sf.ehcache:ehcache:2.10.5" />
+          <element id="library" level="project" name="Gradle: commons-beanutils:commons-beanutils:1.9.3" />
+          <element id="library" level="project" name="Gradle: com.bertramlabs.plugins:less-asset-pipeline:2.14.6" />
+          <element id="library" level="project" name="Gradle: org.mozilla:rhino:1.7R4" />
+          <element id="library" level="project" name="Gradle: log4j:log4j:1.2.17" />
+          <element id="library" level="project" name="Gradle: com.github.sommeri:less4j:1.17.2" />
+          <element id="library" level="project" name="Gradle: com.github.sommeri:less4j-javascript:0.0.1" />
+          <element id="library" level="project" name="Gradle: com.google.javascript:closure-compiler-unshaded:v20160713" />
+          <element id="library" level="project" name="Gradle: org.antlr:antlr-runtime:3.5.2" />
+          <element id="library" level="project" name="Gradle: commons-io:commons-io:2.3" />
+          <element id="library" level="project" name="Gradle: com.google.code.gson:gson:2.8.5" />
+          <element id="library" level="project" name="Gradle: com.google.protobuf:protobuf-java:2.5.0" />
+          <element id="library" level="project" name="Gradle: junit:junit:4.12" />
+          <element id="library" level="project" name="Gradle: ro.isdc.wro4j:rhino:1.7R5-20130223-1" />
+          <element id="library" level="project" name="Gradle: com.google.javascript:closure-compiler-externs:v20160713" />
+          <element id="library" level="project" name="Gradle: args4j:args4j:2.0.26" />
+          <element id="library" level="project" name="Gradle: org.hamcrest:hamcrest-core:1.3" />
+          <element id="library" level="project" name="Gradle: org.apache.commons:commons-collections4:4.2" />
+          <element id="library" level="project" name="Gradle: org.apache.commons:commons-lang3:3.8.1" />
+          <element id="library" level="project" name="Gradle: org.apache.commons:commons-text:1.3" />
+          <element id="library" level="project" name="Gradle: p6spy:p6spy:3.8.1" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.docx.xwpf:2.0.1" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.poi.xwpf.converter.pdf:2.0.1" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.poi.xwpf.converter.xhtml:2.0.1" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.poi.xwpf.converter.core:2.0.1" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.xdocreport.itext.extension:2.0.1" />
+          <element id="library" level="project" name="Gradle: org.apache.poi:poi-ooxml:3.15-beta2" />
+          <element id="library" level="project" name="Gradle: org.apache.poi:ooxml-schemas:1.3" />
+          <element id="library" level="project" name="Gradle: com.lowagie:itext:2.1.7" />
+          <element id="library" level="project" name="Gradle: org.apache.poi:poi:3.15-beta2" />
+          <element id="library" level="project" name="Gradle: com.github.virtuald:curvesapi:1.04" />
+          <element id="library" level="project" name="Gradle: org.apache.xmlbeans:xmlbeans:2.3.0" />
+          <element id="library" level="project" name="Gradle: stax:stax-api:1.0.1" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter:2.0.1" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.odt.odfdom:2.0.1" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.odfdom.converter.pdf:2.0.1" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.odfdom.converter.xhtml:2.0.1" />
+          <element id="library" level="project" name="Gradle: fr.opensagres.xdocreport:fr.opensagres.odfdom.converter.core:2.0.1" />
+          <element id="library" level="project" name="Gradle: org.odftoolkit:odfdom-java:0.8.7" />
+          <element id="library" level="project" name="Gradle: xerces:xercesImpl:2.9.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">

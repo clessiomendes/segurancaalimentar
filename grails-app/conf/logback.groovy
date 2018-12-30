@@ -19,7 +19,8 @@ appender('STDOUT', ConsoleAppender) {
 //                        '%clr(---){faint} %clr([%15.15t]){faint} ' + // Thread
 //                        '%clr(%-40.40logger{39}){cyan} %clr(:){faint} ' + // Logger
 //                        '%m%n%wex' // Message
-        "%d{ddMM HH:mm:ss}%-5level [%thread]: %message%n"
+//        "%d{ddMM HH:mm:ss} %-5level [%thread]: %message%n"
+        "%d{ddMM HH:mm:ss} %-5level  > %message%n"
     }
 }
 
@@ -62,5 +63,6 @@ if (Environment.isDevelopmentMode()) {
 
 //    root(DEBUG, ['STDOUT'])
 }
+//    logger 'org.apoiasuas', INFO
 
 root(ERROR, ['STDOUT'])

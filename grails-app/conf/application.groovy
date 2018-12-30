@@ -17,6 +17,7 @@ dataSource {
     driverClassName = "org.postgresql.Driver"
 
     url = "jdbc:postgresql://${aHost}:${aPort}/${aDb}"
+
     username = aUsername
     password = aPassword
 
@@ -40,8 +41,11 @@ dataSource {
 environments {
     development {
         dataSource {
-//            dbCreate = "update"
-//            url = "jdbc:postgresql://localhost:5432/sa"
+//            dbCreate = "update"     :mysql
+
+            url = "jdbc:p6spy:postgresql://${aHost}:${aPort}/${aDb}"
+            driverClassName = "com.p6spy.engine.spy.P6SpyDriver";
+
 //            username = "postgres"
 //            password = "senha"
         }
@@ -60,3 +64,4 @@ environments {
         }
     }
 }
+

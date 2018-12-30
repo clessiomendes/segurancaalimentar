@@ -19,7 +19,12 @@ import org.hibernate.Session
 @Transactional(readOnly = true)
 abstract class FamiliaService {
 
-    public abstract Familia get(Serializable id)
+    public Familia get(Serializable id, Boolean carregaColecoes = false) {
+        if (! carregaColecoes)
+            return Familia.get(id)
+        else
+            return Familia.findById(id, [fetch: [membros: 'join', historico: 'join', concessoes: 'join', servicoSistemaSeguranca: 'join']])
+    }
 
     public abstract List<Familia> list(Map args)
 
